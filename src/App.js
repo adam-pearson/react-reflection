@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import './App.css';
+import Config from './config';
 import axios from 'axios';
 
 
@@ -7,14 +8,27 @@ import Button from '@mui/material/Button';
 // import { display } from '@mui/system';
 
 
+let apiKey = Config.ACCUWEATHER_API_KEY;
+
 function App() {
 
   const [userLocFromIp, setUserLocFromIp] = useState();
   const [displayLocation, setDisplayLocation] = useState();
   const [weatherAtLocation, setWeatherAtLocation] = useState();
+  const [useMetric, setUseMetric] = useState(true);
+  const [currentWeather, setCurrentWeather] = useState({
+    isDayTime: true,
+    tempImp: 0,
+    tempMet: 0,
+    precipitation: false,
+    precipitationType: null,
+    weatherIcon: 0,
+    weatherText: "",
+  });
+  const [fiveDayForecast, setFiveDayForecast] = useState();
 
 
-  // Function to grab the user's IP address
+  // Function to grab the user's IP address and use it to find their location
   const pullLocationFromIp = useCallback(() => {
     axios.get("https://geolocation-db.com/json")
     .then((response) => {
@@ -25,7 +39,7 @@ function App() {
       console.error("%c\nError fetching IP address for weather location.", css, "\nWe only use your IP address to find your local weather, and we serve no ads, so please consider disabling adblock for the best experience.", "\nDefaulting to Ashburn, Virginia");
     })
     .then((response) => {
-      axios.get(`http://dataservice.accuweather.com/locations/v1/cities/ipaddress?apikey=8IkAMu7Km3GRRYAkhKSYD7ljbFl4Urfo&q=${response}&language=en-GB`)
+      axios.get(`http://dataservice.accuweather.com/locations/v1/cities/ipaddress?apikey=${apiKey}&q=${response}&language=en-GB`)
     .then((response) => {
       setUserLocFromIp(response.data);
     })
@@ -36,9 +50,19 @@ function App() {
   }, []);
 
   const pullCurrentWeatherAtLocation = useCallback((locationKey) => {
-    axios.get(`http://dataservice.accuweather.com/currentconditions/v1/${locationKey}?apikey=8IkAMu7Km3GRRYAkhKSYD7ljbFl4Urfo&language=en-GB`)
+    axios.get(`http://dataservice.accuweather.com/currentconditions/v1/${locationKey}?apikey=${apiKey}&language=en-GB`)
     .then((response) => {
       setWeatherAtLocation(response.data);
+      setCurrentWeather(
+        {
+        isDayTime: response.data[0].IsDayTime,
+        tempImp: response.data[0].Temperature.Imperial.Value,
+        tempMet: response.data[0].Temperature.Metric.Value,
+        precipitation: response.data[0].HasPrecipitation,
+        precipitationType: response.data[0].PrecipitationType,
+        weatherIcon: response.data[0].WeatherIcon,
+        weatherText: response.data[0].WeatherText,
+      });
     })
     .catch ((err) => {
       console.log(err)
@@ -46,6 +70,7 @@ function App() {
   }, []);
 
 
+  // useEffect to pull user location and set the display location on first render
   useEffect(() => {
     if (!userLocFromIp) {
       pullLocationFromIp();
@@ -54,19 +79,16 @@ function App() {
       
   }, [userLocFromIp, pullLocationFromIp])
 
+  // useEffect to pull current weather at the current location
   useEffect(() => {
     if (displayLocation) {
       pullCurrentWeatherAtLocation(displayLocation.Key);
     }
   }, [displayLocation, pullCurrentWeatherAtLocation])
 
-  // useEffect(() => {
-  //     console.log("User loc from IP: ", userLocFromIp);
-  //     console.log("Display location: ", displayLocation);
-  //     console.log("Weather at location: ", weatherAtLocation);
-  // }, [userLocFromIp, displayLocation, weatherAtLocation]);
 
-
+  console.log("Display location: ", displayLocation);
+  console.log("Weather at location: ", weatherAtLocation);
 
 // const returnedWeatherTemplate = [ 
 //   {
@@ -112,7 +134,12 @@ function App() {
       Click me
     </Button>
     <ul>
-      {weatherAtLocation ? <h1>{`The temperature in ${displayLocation.EnglishName} is ${weatherAtLocation[0].Temperature.Metric.Value} ${weatherAtLocation[0].Temperature.Metric.Unit}`}</h1> : "" }
+      {weatherAtLocation ?
+      <>
+      <h1>{`Displaying weather for ${displayLocation.EnglishName}`}</h1>
+      <h2>{`Current temperature: ${useMetric === true ? currentWeather.tempMet + " C": currentWeather.tempImp + " F"}`}</h2>
+      <h2>Raining</h2>
+       </>: "" }
     </ul>
     </div>
   );
