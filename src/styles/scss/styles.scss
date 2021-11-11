@@ -1,0 +1,55 @@
+*, *:after, *:before {
+ box-sizing: border-box;   
+}
+
+.background-image {
+    background-color: grey;
+    width: 100%;
+    height: 50vh;
+    background-size: cover;
+    &.sunny {
+        background-image: url("../../assets/images/sunny.webp");
+    }
+    &.cloudy {
+        background-image: url("../../assets/images/cloudy.webp");
+    }
+    &.rainy {
+        background-image: url("../../assets/images/rainy.jpg");
+    }
+    &.lightning {
+        background-image: url("../../assets/images/lightning.jpg");
+    }
+    &.snowy {
+        background-image: url("../../assets/images/snowy.jpg");
+    }
+    &.icy {
+        background-image: url("../../assets/images/icy.jpg");
+    }
+}
+
+.card-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.testing123 {
+    margin-top: -8em;
+}
+
+.weather-icon-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    img {
+        height: 35%;
+        width: 35%;
+    }
+}
+
+.after-temp {
+    margin-left: -15px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    opacity: 60%;
+}
