@@ -1,6 +1,8 @@
 import React from 'react'
+import CurrentCard from './CurrentCard'
+import SearchResults from './SearchResults';
 
-const WeatherBackground = ({weather}) => {
+const WeatherHeader = ({weather, location, searchResults}) => {
 
     const currentWeatherImage = () => {
         const icon = weather.weatherIcon;
@@ -20,10 +22,11 @@ const WeatherBackground = ({weather}) => {
     }
 
     return (
-        <div>
-            <div className={`background-image ${currentWeatherImage()}`}></div>
+        <div className={`background-image ${currentWeatherImage()}`}>
+            <SearchResults searchResults={searchResults}/>
+            <CurrentCard weather={weather} location={location} />
         </div>
     )
 }
 
-export default WeatherBackground
+export default WeatherHeader

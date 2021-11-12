@@ -1,15 +1,16 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, createContext } from 'react';
 import './styles/css/styles.css';
-import exampleData from './ExampleReturn.json';
+import {searchByIp, searchStringManchester, searchStringMan, searchStringM, currentConditions, fiveDayForecast} from './ExampleReturn';
 import Config from './config';
 import axios from 'axios';
-
 import AppMenu from './components/AppMenu';
-import WeatherBackground from './components/WeatherBackground';
-import CurrentCard from './components/CurrentCard';
+import WeatherHeader from './components/WeatherHeader';
 
+export const SearchContext = createContext();
+export const SearchBoxContext = createContext();
 
-
+// Toggle this to use dummy data
+const useDummyData = true;
 
 
 let apiKey = Config.ACCUWEATHER_API_KEY;
@@ -18,23 +19,18 @@ function App() {
 
   const [userLocFromIp, setUserLocFromIp] = useState();
   const [displayLocation, setDisplayLocation] = useState();
-  const [useMetric, setUseMetric] = useState(true);
-  const [lastRequestEpoch, setLastRequestEpoch] = useState();
   const [pulledWeather, setPulledWeather] = useState({})
   const [currentWeather, setCurrentWeather] = useState({
     recordedTime: "",
       isDayTime: false,
       temperature: {
-          tempImp: null,
-          tempMet: null,
-          realFeelTempImp: null,
-          realFeelTempMet: null
+          temp: null,
+          realFeelTemp: null
       },
       wind: {
           direction: null,
           english: "",
-          speedImp: null,
-          speedMet: null
+          speed: null
       },
       precipitation: {
         precipitation: false,
@@ -50,6 +46,53 @@ function App() {
       weatherText: ""
   });
   const [fiveDayForecast, setFiveDayForecast] = useState();
+  const [searchResults, setSearchResults] = useState();
+
+
+  // State and modifier for search box (passed through context)
+  const [searchValue, setSearchValue] = useState("");
+
+
+  // Set search results state on search submit
+  const searchSubmitHandler = (e) => {
+    e.preventDefault();
+    if (!useDummyData) {
+      axios.get(`http://dataservice.accuweather.com/locations/v1/cities/search?apikey=${apiKey}&q=${searchValue}&language=en-GB&details=true`)
+      .then((response) => {
+        setSearchResults(response.data);
+        handleSearchOpen();
+        console.log(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    } else if (useDummyData) {
+    const dummySearchPromise = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(console.log("FETCHING DUMMY SEARCH DATA"));
+      }, 300);
+    });
+    dummySearchPromise
+    .then((response) => {
+      handleSearchOpen();
+      setSearchResults(searchStringManchester);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }
+};
+
+  const [searchOpen, setSearchOpen] = useState(false);
+  
+    const handleSearchOpen = () => {
+      setSearchOpen(true);
+    };
+    const handleSearchClose = () => {
+      setSearchOpen(false);
+    };
+
+
 
 
   /**
@@ -58,14 +101,11 @@ function App() {
    *  If FALSE, pulls the user's IP and finds their location from accuweather
    */
   const pullLocationFromIp = useCallback(() => {
-
     if (localStorage.getItem('IPLocation')) {
       console.log("Using location from local storage");
       const userLocationFromLocalStorage = JSON.parse(localStorage.getItem('IPLocation'));
       setUserLocFromIp(userLocationFromLocalStorage);
-    } 
-    else
-    {
+    } else {
       console.log("No location found in local storage");
       axios.get("https://geolocation-db.com/json")
       .then((response) => {
@@ -77,7 +117,6 @@ function App() {
         console.error("%c\nError fetching IP address for weather location.", css, "\nWe only use your IP address to find your local weather, and we serve no ads, so please consider disabling adblock for the best experience.", "\nDefaulting to Ashburn, Virginia");
       })
       .then((response) => {
-        console.log("IP response: ", response)
         axios.get(`http://dataservice.accuweather.com/locations/v1/cities/ipaddress?apikey=${apiKey}&q=${response}&language=en-GB`)
         .then((response) => {
           console.log("Response", response);
@@ -91,87 +130,81 @@ function App() {
     }
   }, []);
 
+
+
+
   const pullCurrentWeatherAtLocation = useCallback((locationKey) => {
-    const dummyPromise = new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve(console.log("FETCHING DUMMY DATA"));
-      }, 300);
-    });
-    
-    // UNCOMMENT THIS FOR LIVE CURRENT WEATHER DATA
-    // axios.get(`http://dataservice.accuweather.com/currentconditions/v1/${locationKey}?apikey=${apiKey}&language=en-GB&details=true`)
-    // .then((response) => {
-    //   setLastRequestEpoch(response.data.EpochTime);
-    //   setPulledWeather(response.data);
-    //   setCurrentWeather({
-    //     recordedTime: response.data[0].LocalObservationDateTime,
-    //     isDayTime:response.data[0].IsDayTime,
-    //     temperature: {
-    //         tempImp: response.data[0].Temperature.Imperial.Value,
-    //         tempMet: response.data[0].Temperature.Metric.Value,
-    //         realFeelTempImp: response.data[0].RealFeelTemperature.Imperial.Value,
-    //         realFeelTempMet: response.data[0].RealFeelTemperature.Metric.Value,
-    //     },
-    //     wind: {
-    //         direction: response.data[0].Wind.Direction.Degrees,
-    //         english: response.data[0].Wind.Direction.English,
-    //         speedImp: response.data[0].Wind.Speed.Imperial.Value,
-    //         speedMet: response.data[0].Wind.Speed.Metric.Value,
-    //     },
-    //     precipitation: {
-    //       precipitation: response.data[0].HasPrecipitation,
-    //       precipitationType: response.data[0].PrecipitationType,
-    //     },
-    //     uvIndex: {
-    //       index: response.data[0].UVIndex,
-    //       indexText: response.data[0].UVIndexText
-    //     },
-    //     relativeHumidity: response.data[0].RelativeHumidity,
-    //     weatherIcon: response.data[0].WeatherIcon,
-    //     weatherIconFile: `/icons/${response.data[0].WeatherIcon}.png`,
-    //     weatherText: response.data[0].WeatherText,
-    // });
-
-      // add 5 day forecast setter here
-    // })
-
-    // COMMENT THIS OUT FOR REAL DATA
-    dummyPromise
-    .then((response) => {
-      setLastRequestEpoch(exampleData);
-      setCurrentWeather({
-        recordedTime: exampleData[0].LocalObservationDateTime,
-        isDayTime: exampleData[0].IsDayTime,
-        temperature: {
-            tempImp: exampleData[0].Temperature.Imperial.Value,
-            tempMet: exampleData[0].Temperature.Metric.Value,
-            realFeelTempImp: exampleData[0].RealFeelTemperature.Imperial.Value,
-            realFeelTempMet: exampleData[0].RealFeelTemperature.Metric.Value,
-        },
-        wind: {
-            direction: exampleData[0].Wind.Direction.Degrees,
-            english: exampleData[0].Wind.Direction.English,
-            speedImp: exampleData[0].Wind.Speed.Imperial.Value,
-            speedMet: exampleData[0].Wind.Speed.Metric.Value,
-        },
-        precipitation: {
-          precipitation: exampleData[0].HasPrecipitation,
-          precipitationType: exampleData[0].PrecipitationType,
-        },
-        uvIndex: {
-          index: exampleData[0].UVIndex,
-          indexText: exampleData[0].UVIndexText
-        },
-        relativeHumidity: exampleData[0].RelativeHumidity,
-        weatherIcon: exampleData[0].WeatherIcon,
-        weatherIconFile: `/icons/${exampleData[0].WeatherIcon}.png`,
-        weatherText: exampleData[0].WeatherText,
+    if (!useDummyData) {
+      axios.get(`http://dataservice.accuweather.com/currentconditions/v1/${locationKey}?apikey=${apiKey}&language=en-GB&details=true`)
+      .then((response) => {
+          setPulledWeather(response.data);
+          setCurrentWeather({
+            recordedTime: response.data[0].LocalObservationDateTime,
+            isDayTime:response.data[0].IsDayTime,
+            temperature: {
+                temp: response.data[0].Temperature.Metric.Value,
+                realFeelTemp: response.data[0].RealFeelTemperature.Metric.Value,
+            },
+            wind: {
+                direction: response.data[0].Wind.Direction.Degrees,
+                english: response.data[0].Wind.Direction.English,
+                speed: response.data[0].Wind.Speed.Metric.Value,
+            },
+            precipitation: {
+              precipitation: response.data[0].HasPrecipitation,
+              precipitationType: response.data[0].PrecipitationType,
+            },
+            uvIndex: {
+              index: response.data[0].UVIndex,
+              indexText: response.data[0].UVIndexText
+            },
+            relativeHumidity: response.data[0].RelativeHumidity,
+            weatherIcon: response.data[0].WeatherIcon,
+            weatherIconFile: `/icons/${response.data[0].WeatherIcon}.png`,
+            weatherText: response.data[0].WeatherText,
+        })
+      })
+      .catch ((err) => {
+        console.log(err)
       });
-
-    })
-    .catch ((err) => {
-      console.log(err)
-    })
+    } else if (useDummyData) {
+      const dummyPromise = new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve(console.log("FETCHING DUMMY WEATHER DATA"));
+        }, 300);
+      });
+      dummyPromise
+      .then((response) => {
+        setCurrentWeather({
+          recordedTime: currentConditions[0].LocalObservationDateTime,
+          isDayTime: currentConditions[0].IsDayTime,
+          temperature: {
+              temp: currentConditions[0].Temperature.Metric.Value,
+              realFeelTemp: currentConditions[0].RealFeelTemperature.Metric.Value,
+          },
+          wind: {
+              direction: currentConditions[0].Wind.Direction.Degrees,
+              english: currentConditions[0].Wind.Direction.English,
+              speed: currentConditions[0].Wind.Speed.Metric.Value,
+          },
+          precipitation: {
+            precipitation: currentConditions[0].HasPrecipitation,
+            precipitationType: currentConditions[0].PrecipitationType,
+          },
+          uvIndex: {
+            index: currentConditions[0].UVIndex,
+            indexText: currentConditions[0].UVIndexText
+          },
+          relativeHumidity: currentConditions[0].RelativeHumidity,
+          weatherIcon: currentConditions[0].WeatherIcon,
+          weatherIconFile: `/icons/${currentConditions[0].WeatherIcon}.png`,
+          weatherText: currentConditions[0].WeatherText,
+        });
+      })
+      .catch ((err) => {
+        console.log(err)
+      });
+    }
   }, []);
 
 
@@ -185,30 +218,21 @@ function App() {
   }, [userLocFromIp, pullLocationFromIp])
 
 
-  // pulling current weather at display location
+  // pulling current weather at display location if set
   useEffect(() => {
     if (displayLocation) {
       pullCurrentWeatherAtLocation(displayLocation.Key);
     }
   }, [displayLocation, pullCurrentWeatherAtLocation]);
 
-
-
-  console.log("Display location: ", displayLocation);
-  console.log("Pulled weather: ", pulledWeather);
-  console.log("Current weather: ", currentWeather);
-
-
   return (
     <div>
-      {/* <AppMenu /> */}
-      <WeatherBackground weather={currentWeather} />
-      <CurrentCard weather={currentWeather} useMetric={useMetric} location={displayLocation} />
-    
-
-
-
-
+      <SearchContext.Provider value={{searchValue, setSearchValue, searchSubmitHandler}}>
+        <SearchBoxContext.Provider value={{searchOpen, setSearchOpen, handleSearchOpen, handleSearchClose}}>
+          <AppMenu />
+          <WeatherHeader weather={currentWeather} location={displayLocation} searchResults={searchResults}/>
+        </SearchBoxContext.Provider>
+      </SearchContext.Provider>
     </div>
   );
 }
