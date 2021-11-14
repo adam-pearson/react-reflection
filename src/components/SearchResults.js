@@ -1,25 +1,17 @@
 import {useContext, useState} from 'react';
 import PropTypes from 'prop-types';
-import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import Typography from '@mui/material/Typography';
 import {SearchBoxContext} from '../App';
 
-import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import Divider from '@mui/material/Divider';
-import InboxIcon from '@mui/icons-material/Inbox';
-import DraftsIcon from '@mui/icons-material/Drafts';
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -61,17 +53,26 @@ BootstrapDialogTitle.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-const SearchResults = ({searchResults}) => {
-const searchBoxContext = useContext(SearchBoxContext)
+
+  const SearchResults = ({searchResults}) => {
+  const searchBoxContext = useContext(SearchBoxContext)
+
+  const {searchOpen, setDisplayLocation, setSearchOpen, handleSearchClose} = searchBoxContext;
+
+  const searchClickHandler = (item) => {
+    setDisplayLocation(item);
+    console.log("Search item clicked: ", item);
+    setSearchOpen(false);
+  }
 
   return (
     <div>
       <BootstrapDialog
-        onClose={searchBoxContext.handleSearchClose}
+        onClose={handleSearchClose}
         aria-labelledby="search-results"
-        open={searchBoxContext.searchOpen}
+        open={searchOpen}
       >
-        <BootstrapDialogTitle id="search-results" onClose={searchBoxContext.handleSearchClose}>
+        <BootstrapDialogTitle id="search-results" onClose={handleSearchClose}>
           Search Results
         </BootstrapDialogTitle>
         <DialogContent dividers>
@@ -80,7 +81,7 @@ const searchBoxContext = useContext(SearchBoxContext)
                     searchResults.map((item, index) => {
                         return (
                             <ListItem disablePadding key={index}>
-                                <ListItemButton >
+                                <ListItemButton onClick={e => searchClickHandler(item)}>
                                     <ListItemText primary={`${item.LocalizedName}, ${item.AdministrativeArea.LocalizedName === item.LocalizedName 
                                         ? `${item.Country.LocalizedName}`
                                         : `${item.AdministrativeArea.LocalizedName}, ${item.Country.LocalizedName}`}`}>

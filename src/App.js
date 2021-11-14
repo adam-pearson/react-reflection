@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, createContext } from 'react';
 import './styles/css/styles.css';
-import {searchByIp, searchStringManchester, searchStringMan, searchStringM, currentConditions, fiveDayForecast} from './ExampleReturn';
+import {searchStringManchester, currentConditions} from './ExampleReturn';
 import Config from './config';
 import axios from 'axios';
 import AppMenu from './components/AppMenu';
@@ -10,7 +10,7 @@ export const SearchContext = createContext();
 export const SearchBoxContext = createContext();
 
 // Toggle this to use dummy data
-const useDummyData = true;
+const useDummyData = false;
 
 
 let apiKey = Config.ACCUWEATHER_API_KEY;
@@ -45,9 +45,7 @@ function App() {
       weatherIconFile: "",
       weatherText: ""
   });
-  const [fiveDayForecast, setFiveDayForecast] = useState();
   const [searchResults, setSearchResults] = useState();
-
 
   // State and modifier for search box (passed through context)
   const [searchValue, setSearchValue] = useState("");
@@ -228,7 +226,7 @@ function App() {
   return (
     <div>
       <SearchContext.Provider value={{searchValue, setSearchValue, searchSubmitHandler}}>
-        <SearchBoxContext.Provider value={{searchOpen, setSearchOpen, handleSearchOpen, handleSearchClose}}>
+        <SearchBoxContext.Provider value={{searchOpen, setDisplayLocation, setSearchOpen, handleSearchClose}}>
           <AppMenu />
           <WeatherHeader weather={currentWeather} location={displayLocation} searchResults={searchResults}/>
         </SearchBoxContext.Provider>
