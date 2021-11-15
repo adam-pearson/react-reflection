@@ -919,7 +919,7 @@ export const currentConditions = [
 
 // Pull five day forecast for Manchester
 // http://dataservice.accuweather.com/forecasts/v1/daily/5day/329260?apikey=8IkAMu7Km3GRRYAkhKSYD7ljbFl4Urfo&language=en-GB&details=true&metric=true
-export const fiveDayForecast = {
+export const fiveDayForecastDummy = {
   "Headline": {
     "EffectiveDate": "2021-11-12T07:00:00+00:00",
     "EffectiveEpochDate": 1636700400,

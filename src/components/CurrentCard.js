@@ -5,7 +5,6 @@ import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import IconButton from '@mui/material/IconButton';
-
 import Collapse from '@mui/material/Collapse';
 import Typography from '@mui/material/Typography';
 import Table from '@mui/material/Table';
@@ -27,7 +26,7 @@ const ExpandMore = styled((props) => {
 }));
 
 
-export default function RecipeReviewCard({weather, location}) {
+export default function CurrentCard({weather, location}) {
   const [expanded, setExpanded] = React.useState(false);
 
   function createData(name,value) {
@@ -53,7 +52,7 @@ export default function RecipeReviewCard({weather, location}) {
     <div className="card-container">
         <Card className="current-card">
         <CardHeader
-            title={weather.weatherText ? `${location.EnglishName} is ${weather.weatherText.toLowerCase()}.` : "Place Name"}
+            title={weather.weatherText ? `The weather in ${location.EnglishName} is ${weather.weatherText.toLowerCase()}.` : "Place Name"}
             subheader={time}
         />
         <CardContent>
@@ -63,10 +62,7 @@ export default function RecipeReviewCard({weather, location}) {
               </div>
               <div className="weather-info">
                 <Typography variant="h3" color="text.primary">
-                    {weather.weatherText ? `${weather.temperature.temp}°` : "Awaiting Data"}
-                    <span className="after-temp">
-                        {weather.weatherText ? `C` : ""}
-                    </span>
+                    {weather.weatherText ? `${weather.temperature.temp}°C` : "Awaiting Data"}
                 </Typography>
                 <Typography variant="subtitle1" component="p" color="text.primary">
                         {weather.weatherText ? `RealFeel® ${weather.temperature.realFeelTemp}°C` : ""}

@@ -1,10 +1,19 @@
 import { useState, useEffect, useCallback, createContext } from 'react';
 import './styles/css/styles.css';
-import {searchStringManchester, currentConditions} from './ExampleReturn';
+import {searchStringManchester, currentConditions, fiveDayForecastDummy} from './ExampleReturn';
 import Config from './config';
 import axios from 'axios';
 import AppMenu from './components/AppMenu';
 import WeatherHeader from './components/WeatherHeader';
+import CurrentCard from './components/CurrentCard';
+import { createTheme, responsiveFontSizes, ThemeProvider } from '@mui/material/styles';
+import { BrowserRouter as Router, Link, Routes, Route } from "react-router-dom";
+import FiveDayCards from './components/FiveDayCards';
+import Button from '@mui/material/Button';
+
+
+let theme = createTheme();
+theme = responsiveFontSizes(theme);
 
 export const SearchContext = createContext();
 export const SearchBoxContext = createContext();
@@ -19,7 +28,6 @@ function App() {
 
   const [userLocFromIp, setUserLocFromIp] = useState();
   const [displayLocation, setDisplayLocation] = useState();
-  const [pulledWeather, setPulledWeather] = useState({})
   const [currentWeather, setCurrentWeather] = useState({
     recordedTime: "",
       isDayTime: false,
@@ -45,8 +53,9 @@ function App() {
       weatherIconFile: "",
       weatherText: ""
   });
+  const [fiveDayForecast, setFiveDayForecast] = useState();
   const [searchResults, setSearchResults] = useState();
-
+  const [forecastPage, setForecastPage] = useState();
   // State and modifier for search box (passed through context)
   const [searchValue, setSearchValue] = useState("");
 
@@ -134,8 +143,7 @@ function App() {
   const pullCurrentWeatherAtLocation = useCallback((locationKey) => {
     if (!useDummyData) {
       axios.get(`http://dataservice.accuweather.com/currentconditions/v1/${locationKey}?apikey=${apiKey}&language=en-GB&details=true`)
-      .then((response) => {
-          setPulledWeather(response.data);
+      .then ((response) => {
           setCurrentWeather({
             recordedTime: response.data[0].LocalObservationDateTime,
             isDayTime:response.data[0].IsDayTime,
@@ -161,6 +169,33 @@ function App() {
             weatherIconFile: `/icons/${response.data[0].WeatherIcon}.png`,
             weatherText: response.data[0].WeatherText,
         })
+        axios.get(`http://dataservice.accuweather.com/forecasts/v1/daily/5day/${locationKey}?apikey=${apiKey}&language=en-GB&details=true&metric=true`)
+        .then ((response) => {
+          let fiveDayPre = [];
+          for (let i = 0; i < response.data.DailyForecasts.length; i++) {
+            fiveDayPre.push(
+              {
+                date: response.data.DailyForecasts[i].Date,
+                sunrise: response.data.DailyForecasts[i].Sun.Rise,
+                sunset: response.data.DailyForecasts[i].Sun.Set,
+                tempMin: response.data.DailyForecasts[i].Temperature.Minimum.Value,
+                tempMax: response.data.DailyForecasts[i].Temperature.Maximum.Value,
+                weatherIcon: response.data.DailyForecasts[i].Day.Icon,
+                weatherIconFile: `/icons/${response.data.DailyForecasts[i].Day.Icon}.png`,
+                precipitation: {
+                  precpitation: response.data.DailyForecasts[i].Day.HasPrecipitation,
+                  precipitationType: response.data.DailyForecasts[i].Day.PrecipitationType,
+                },
+                weatherText: response.data.DailyForecasts[i].Day.LongPhrase,
+              }
+            )
+          }
+          setFiveDayForecast(fiveDayPre);
+          fiveDayPre = [];
+        })
+        .catch ((err) => {
+          console.log(err)
+        });
       })
       .catch ((err) => {
         console.log(err)
@@ -172,7 +207,7 @@ function App() {
         }, 300);
       });
       dummyPromise
-      .then((response) => {
+      .then ((response) => {
         setCurrentWeather({
           recordedTime: currentConditions[0].LocalObservationDateTime,
           isDayTime: currentConditions[0].IsDayTime,
@@ -198,6 +233,29 @@ function App() {
           weatherIconFile: `/icons/${currentConditions[0].WeatherIcon}.png`,
           weatherText: currentConditions[0].WeatherText,
         });
+      })
+      .then ((response) => {
+        let fiveDayPre = [];
+        for (let i = 0; i < fiveDayForecastDummy.DailyForecasts.length; i++) {
+          fiveDayPre.push(
+            {
+              date: fiveDayForecastDummy.DailyForecasts[i].Date,
+              sunrise: fiveDayForecastDummy.DailyForecasts[i].Sun.Rise,
+              sunset: fiveDayForecastDummy.DailyForecasts[i].Sun.Set,
+              tempMin: fiveDayForecastDummy.DailyForecasts[i].Temperature.Minimum.Value,
+              tempMax: fiveDayForecastDummy.DailyForecasts[i].Temperature.Maximum.Value,
+              weatherIcon: fiveDayForecastDummy.DailyForecasts[i].Day.Icon,
+              weatherIconFile: `/icons/${fiveDayForecastDummy.DailyForecasts[i].Day.Icon}.png`,
+              precipitation: {
+                precpitation: fiveDayForecastDummy.DailyForecasts[i].Day.HasPrecipitation,
+                precipitationType: fiveDayForecastDummy.DailyForecasts[i].Day.PrecipitationType,
+              },
+              weatherText: fiveDayForecastDummy.DailyForecasts[i].Day.LongPhrase,
+            }
+          )
+        }
+        setFiveDayForecast(fiveDayPre);
+        fiveDayPre = [];
       })
       .catch ((err) => {
         console.log(err)
@@ -227,8 +285,26 @@ function App() {
     <div>
       <SearchContext.Provider value={{searchValue, setSearchValue, searchSubmitHandler}}>
         <SearchBoxContext.Provider value={{searchOpen, setDisplayLocation, setSearchOpen, handleSearchClose}}>
-          <AppMenu />
-          <WeatherHeader weather={currentWeather} location={displayLocation} searchResults={searchResults}/>
+          <ThemeProvider theme={theme}>
+            <Router>
+              <AppMenu />
+              <WeatherHeader weather={currentWeather} location={displayLocation} searchResults={searchResults}/>
+
+              <Routes>
+                <Route path="/" exact element={<CurrentCard weather={currentWeather} location={displayLocation} searchResults={searchResults} />} />
+                <Route path="/forecast" exact element={<FiveDayCards forecast={fiveDayForecast} location={displayLocation} />} />
+              </Routes>
+
+              <div className="forecast-btn-container">
+                <Button variant="contained" className="forecast-btn" component={Link} to={forecastPage ? "/" : "/forecast"} onClick={e => setForecastPage(!forecastPage)}>
+                  {forecastPage 
+                  ? "Current Weather"
+                  : "Five Day Forecast"
+                  }
+                </Button>
+              </div>
+              </Router>
+          </ThemeProvider>
         </SearchBoxContext.Provider>
       </SearchContext.Provider>
     </div>
