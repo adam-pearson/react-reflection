@@ -112,8 +112,9 @@ li {
 
 .weather-icon {
     img {
-        height: 125%;
-        width: 125%;
+        height: 100%;
+        width: 100%;
+        transform: scale(1.25);
     }
     @include media-xl {
         margin-bottom: 1.5rem;

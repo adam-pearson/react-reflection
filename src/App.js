@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, createContext } from 'react';
 import './styles/css/styles.css';
-import {searchStringManchester, currentConditions, fiveDayForecastDummy} from './ExampleReturn';
+import {searchByIp, searchStringManchester, currentConditions, fiveDayForecastDummy} from './ExampleReturn';
 import Config from './config';
 import axios from 'axios';
 import AppMenu from './components/AppMenu';
@@ -64,7 +64,7 @@ function App() {
   const searchSubmitHandler = (e) => {
     e.preventDefault();
     if (!useDummyData) {
-      axios.get(`http://dataservice.accuweather.com/locations/v1/cities/search?apikey=${apiKey}&q=${searchValue}&language=en-GB&details=true`)
+      axios.get(`https://dataservice.accuweather.com/locations/v1/cities/search?apikey=${apiKey}&q=${searchValue}&language=en-GB&details=true`)
       .then((response) => {
         setSearchResults(response.data);
         handleSearchOpen();
@@ -114,7 +114,7 @@ function App() {
       setUserLocFromIp(userLocationFromLocalStorage);
     } else {
       console.log("No location found in local storage");
-      axios.get("https://geolocation-db.com/json")
+      axios.get("https://geolocation-db.com/json/de711330-3dff-11ec-a9a6-8f668cb904bf")
       .then((response) => {
         console.log("IPv4: ", response.data.IPv4);
         return response.data.IPv4;
@@ -122,9 +122,11 @@ function App() {
       .catch ((err) => {
         let css = "font-weight: bold; font-size: 1rem";
         console.error("%c\nError fetching IP address for weather location.", css, "\nWe only use your IP address to find your local weather, and we serve no ads, so please consider disabling adblock for the best experience.", "\nDefaulting to Ashburn, Virginia");
+        setUserLocFromIp(searchByIp);
+        localStorage.setItem('IPLocation', JSON.stringify(searchByIp));
       })
       .then((response) => {
-        axios.get(`http://dataservice.accuweather.com/locations/v1/cities/ipaddress?apikey=${apiKey}&q=${response}&language=en-GB`)
+        axios.get(`https://dataservice.accuweather.com/locations/v1/cities/ipaddress?apikey=${apiKey}&q=${response}&language=en-GB`)
         .then((response) => {
           console.log("Response", response);
           setUserLocFromIp(response.data);
@@ -142,7 +144,7 @@ function App() {
 
   const pullCurrentWeatherAtLocation = useCallback((locationKey) => {
     if (!useDummyData) {
-      axios.get(`http://dataservice.accuweather.com/currentconditions/v1/${locationKey}?apikey=${apiKey}&language=en-GB&details=true`)
+      axios.get(`https://dataservice.accuweather.com/currentconditions/v1/${locationKey}?apikey=${apiKey}&language=en-GB&details=true`)
       .then ((response) => {
           setCurrentWeather({
             recordedTime: response.data[0].LocalObservationDateTime,
@@ -169,7 +171,7 @@ function App() {
             weatherIconFile: `/icons/${response.data[0].WeatherIcon}.png`,
             weatherText: response.data[0].WeatherText,
         })
-        axios.get(`http://dataservice.accuweather.com/forecasts/v1/daily/5day/${locationKey}?apikey=${apiKey}&language=en-GB&details=true&metric=true`)
+        axios.get(`https://dataservice.accuweather.com/forecasts/v1/daily/5day/${locationKey}?apikey=${apiKey}&language=en-GB&details=true&metric=true`)
         .then ((response) => {
           let fiveDayPre = [];
           for (let i = 0; i < response.data.DailyForecasts.length; i++) {

@@ -1,6 +1,6 @@
 // Pull location from IP address
 // http://dataservice.accuweather.com/locations/v1/cities/ipaddress?apikey=${apiKey}&q=${response}&language=en-GB
-export const searchByIP = {
+export const searchByIp = {
   "Version": 1,
   "Key": "329260",
   "Type": "City",
