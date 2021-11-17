@@ -22,7 +22,8 @@ export const SearchBoxContext = createContext();
 const useDummyData = false;
 
 
-let apiKey = Config.ACCUWEATHER_API_KEY;
+let apiKey = Config.OPENWEATHERMAP_API_KEY;
+
 
 function App() {
 
@@ -283,6 +284,35 @@ function App() {
     }
   }, [displayLocation, pullCurrentWeatherAtLocation]);
 
+  const getLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+      console.log("Geolocation is not supported on this device");
+    }
+  };
+
+  const showPosition = (position) => {
+    console.log("Latitude: ", position.coords.latitude);
+    console.log("Longitude: ", position.coords.longitude);
+    let lat = position.coords.latitude;
+    let lon = position.coords.longitude;
+    axios.get(`https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=10&appid=${apiKey}`)
+      .then (response => {
+        console.log("Location from co-ordinates: ", response);
+      })
+      .catch (err => {
+        console.log("Error getting location: ", err);
+      })
+    axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`)
+      .then (response => {
+        console.log("Response from lat lon: ", response);
+      })
+      .catch (err => {
+        console.log("Error from lat lon: ", err);
+      });
+  };
+
   return (
     <div>
       <SearchContext.Provider value={{searchValue, setSearchValue, searchSubmitHandler}}>
@@ -291,6 +321,8 @@ function App() {
             <Router>
               <AppMenu />
               <WeatherHeader weather={currentWeather} location={displayLocation} searchResults={searchResults}/>
+
+              <Button variant="contained" onClick={() => getLocation()}>GPS Location</Button>
 
               <Routes>
                 <Route path="/" exact element={<CurrentCard weather={currentWeather} location={displayLocation} searchResults={searchResults} />} />
