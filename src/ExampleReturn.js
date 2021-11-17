@@ -1,2207 +1,828 @@
-// Pull location from IP address
-// http://dataservice.accuweather.com/locations/v1/cities/ipaddress?apikey=${apiKey}&q=${response}&language=en-GB
-export const searchByIp = {
-  "Version": 1,
-  "Key": "329260",
-  "Type": "City",
-  "Rank": 31,
-  "LocalizedName": "Manchester",
-  "EnglishName": "Manchester",
-  "PrimaryPostalCode": "M15 6",
-  "Region": {
-    "ID": "EUR",
-    "LocalizedName": "Europe",
-    "EnglishName": "Europe"
-  },
-  "Country": {
-    "ID": "GB",
-    "LocalizedName": "United Kingdom",
-    "EnglishName": "United Kingdom"
-  },
-  "AdministrativeArea": {
-    "ID": "MAN",
-    "LocalizedName": "Manchester",
-    "EnglishName": "Manchester",
-    "Level": 1,
-    "LocalizedType": "Metropolitan Borough",
-    "EnglishType": "Metropolitan Borough",
-    "CountryID": "GB"
-  },
-  "TimeZone": {
-    "Code": "GMT",
-    "Name": "Europe/London",
-    "GmtOffset": 0,
-    "IsDaylightSaving": false,
-    "NextOffsetChange": "2022-03-27T01:00:00Z"
-  },
-  "GeoPosition": {
-    "Latitude": 53.478,
-    "Longitude": -2.245,
-    "Elevation": {
-      "Metric": {
-        "Value": 58,
-        "Unit": "m",
-        "UnitType": 5
-      },
-      "Imperial": {
-        "Value": 190,
-        "Unit": "ft",
-        "UnitType": 0
-      }
-    }
-  },
-  "IsAlias": false,
-  "SupplementalAdminAreas": [
-    {
-      "Level": 0,
-      "LocalizedName": "England",
-      "EnglishName": "England"
-    }
-  ],
-  "DataSets": [
-    "AirQualityCurrentConditions",
-    "AirQualityForecasts",
-    "Alerts",
-    "DailyPollenForecast",
-    "ForecastConfidence",
-    "FutureRadar",
-    "MinuteCast",
-    "Radar"
-  ]
-};
-
-
-// Search for string "Manchester"
-// http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${apiKey}&q=Manchester&language=en-GB
-export const searchStringManchester = [
+// Search for string "London"
+// https://api.openweathermap.org/geo/1.0/direct?q=${searchQuery}&limit=5&appid=${apiKey}
+export const searchQuery = [
   {
-    "Version": 1,
-    "Key": "329260",
-    "Type": "City",
-    "Rank": 31,
-    "LocalizedName": "Manchester",
-    "Country": {
-      "ID": "GB",
-      "LocalizedName": "United Kingdom"
+    "name": "London",
+    "local_names": {
+      "af": "Londen",
+      "ar": "لندن",
+      "ascii": "London",
+      "az": "London",
+      "bg": "Лондон",
+      "ca": "Londres",
+      "da": "London",
+      "de": "London",
+      "el": "Λονδίνο",
+      "en": "London",
+      "eu": "Londres",
+      "fa": "لندن",
+      "feature_name": "London",
+      "fi": "Lontoo",
+      "fr": "Londres",
+      "gl": "Londres",
+      "he": "לונדון",
+      "hi": "लंदन",
+      "hr": "London",
+      "hu": "London",
+      "id": "London",
+      "it": "Londra",
+      "ja": "ロンドン",
+      "la": "Londinium",
+      "lt": "Londonas",
+      "mk": "Лондон",
+      "nl": "Londen",
+      "no": "London",
+      "pl": "Londyn",
+      "pt": "Londres",
+      "ro": "Londra",
+      "ru": "Лондон",
+      "sk": "Londýn",
+      "sl": "London",
+      "sr": "Лондон",
+      "th": "ลอนดอน",
+      "tr": "Londra",
+      "vi": "Luân Đôn",
+      "zu": "ILondon"
     },
-    "AdministrativeArea": {
-      "ID": "MAN",
-      "LocalizedName": "Manchester"
-    }
+    "lat": 51.5085,
+    "lon": -0.1257,
+    "country": "GB"
   },
   {
-    "Version": 1,
-    "Key": "334459",
-    "Type": "City",
-    "Rank": 45,
-    "LocalizedName": "Manchester",
-    "Country": {
-      "ID": "US",
-      "LocalizedName": "United States"
+    "name": "London",
+    "local_names": {
+      "ar": "لندن",
+      "ascii": "London",
+      "bg": "Лондон",
+      "de": "London",
+      "en": "London",
+      "fa": "لندن، انتاریو",
+      "feature_name": "London",
+      "fi": "London",
+      "fr": "London",
+      "he": "לונדון",
+      "ja": "ロンドン",
+      "lt": "Londonas",
+      "nl": "London",
+      "pl": "London",
+      "pt": "London",
+      "ru": "Лондон",
+      "sr": "Лондон"
     },
-    "AdministrativeArea": {
-      "ID": "NH",
-      "LocalizedName": "New Hampshire"
-    }
+    "lat": 42.9834,
+    "lon": -81.233,
+    "country": "CA"
   },
   {
-    "Version": 1,
-    "Key": "332246",
-    "Type": "City",
-    "Rank": 55,
-    "LocalizedName": "Manchester",
-    "Country": {
-      "ID": "US",
-      "LocalizedName": "United States"
+    "name": "London",
+    "local_names": {
+      "ar": "لندن",
+      "ascii": "London",
+      "en": "London",
+      "fa": "لندن، اوهایو",
+      "feature_name": "London",
+      "sr": "Ландон"
     },
-    "AdministrativeArea": {
-      "ID": "CT",
-      "LocalizedName": "Connecticut"
-    }
+    "lat": 39.8865,
+    "lon": -83.4483,
+    "country": "US",
+    "state": "OH"
   },
   {
-    "Version": 1,
-    "Key": "2141612",
-    "Type": "City",
-    "Rank": 65,
-    "LocalizedName": "Manchester",
-    "Country": {
-      "ID": "US",
-      "LocalizedName": "United States"
+    "name": "London",
+    "local_names": {
+      "ar": "لندن",
+      "ascii": "London",
+      "en": "London",
+      "fa": "لندن، کنتاکی",
+      "feature_name": "London",
+      "sr": "Ландон"
     },
-    "AdministrativeArea": {
-      "ID": "MO",
-      "LocalizedName": "Missouri"
-    }
+    "lat": 37.129,
+    "lon": -84.0833,
+    "country": "US",
+    "state": "KY"
   },
   {
-    "Version": 1,
-    "Key": "335643",
-    "Type": "City",
-    "Rank": 65,
-    "LocalizedName": "Manchester",
-    "Country": {
-      "ID": "US",
-      "LocalizedName": "United States"
+    "name": "London",
+    "local_names": {
+      "ascii": "London",
+      "ca": "Londres",
+      "en": "London",
+      "feature_name": "London"
     },
-    "AdministrativeArea": {
-      "ID": "TN",
-      "LocalizedName": "Tennessee"
-    }
-  },
-  {
-    "Version": 1,
-    "Key": "2119492",
-    "Type": "City",
-    "Rank": 65,
-    "LocalizedName": "Manchester",
-    "Country": {
-      "ID": "US",
-      "LocalizedName": "United States"
-    },
-    "AdministrativeArea": {
-      "ID": "VA",
-      "LocalizedName": "Virginia"
-    }
-  },
-  {
-    "Version": 1,
-    "Key": "34548",
-    "Type": "City",
-    "Rank": 75,
-    "LocalizedName": "Manchester",
-    "Country": {
-      "ID": "BO",
-      "LocalizedName": "Bolivia"
-    },
-    "AdministrativeArea": {
-      "ID": "N",
-      "LocalizedName": "Pando"
-    }
-  },
-  {
-    "Version": 1,
-    "Key": "333030",
-    "Type": "City",
-    "Rank": 75,
-    "LocalizedName": "Manchester",
-    "Country": {
-      "ID": "US",
-      "LocalizedName": "United States"
-    },
-    "AdministrativeArea": {
-      "ID": "IA",
-      "LocalizedName": "Iowa"
-    }
-  },
-  {
-    "Version": 1,
-    "Key": "331369",
-    "Type": "City",
-    "Rank": 75,
-    "LocalizedName": "Manchester",
-    "Country": {
-      "ID": "US",
-      "LocalizedName": "United States"
-    },
-    "AdministrativeArea": {
-      "ID": "WA",
-      "LocalizedName": "Washington"
-    }
-  },
-  {
-    "Version": 1,
-    "Key": "336165",
-    "Type": "City",
-    "Rank": 85,
-    "LocalizedName": "Manchester",
-    "Country": {
-      "ID": "US",
-      "LocalizedName": "United States"
-    },
-    "AdministrativeArea": {
-      "ID": "VT",
-      "LocalizedName": "Vermont"
-    }
+    "lat": 36.4761,
+    "lon": -119.4432,
+    "country": "US",
+    "state": "CA"
   }
 ];
 
-// Search for string "Man"
-// http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${apiKey}&q=Man&language=en-GB
-export const searchStringMan = [
+// Reverse Geocoding - Search for location by co-ordinates
+// https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=5&appid=${apiKey}
+export const coordinateSearch = [
   {
-    "Version": 1,
-    "Key": "253810",
-    "Type": "City",
-    "Rank": 20,
-    "LocalizedName": "Managua",
-    "Country": {
-      "ID": "NI",
-      "LocalizedName": "Nicaragua"
+    "name": "City of London",
+    "local_names": {
+      "ar": "مدينة لندن",
+      "ascii": "City of London",
+      "bg": "Сити",
+      "ca": "La City",
+      "de": "London City",
+      "el": "Σίτι του Λονδίνου",
+      "en": "City of London",
+      "fa": "سیتی لندن",
+      "feature_name": "City of London",
+      "fi": "Lontoon City",
+      "fr": "Cité de Londres",
+      "gl": "Cidade de Londres",
+      "he": "הסיטי של לונדון",
+      "hi": "सिटी ऑफ़ लंदन",
+      "id": "Kota London",
+      "it": "Londra",
+      "ja": "シティ・オブ・ロンドン",
+      "la": "Civitas Londinium",
+      "lt": "Londono Sitis",
+      "pt": "Cidade de Londres",
+      "ru": "Сити",
+      "sr": "Сити",
+      "th": "นครลอนดอน",
+      "tr": "Londra Şehri",
+      "vi": "Thành phố Luân Đôn",
+      "zu": "Idolobha weLondon"
     },
-    "AdministrativeArea": {
-      "ID": "MN",
-      "LocalizedName": "Managua"
-    }
+    "lat": 51.5128,
+    "lon": -0.0918,
+    "country": "GB"
   },
   {
-    "Version": 1,
-    "Key": "264885",
-    "Type": "City",
-    "Rank": 20,
-    "LocalizedName": "Manila",
-    "Country": {
-      "ID": "PH",
-      "LocalizedName": "Philippines"
+    "name": "London",
+    "local_names": {
+      "af": "Londen",
+      "ar": "لندن",
+      "ascii": "London",
+      "az": "London",
+      "bg": "Лондон",
+      "ca": "Londres",
+      "da": "London",
+      "de": "London",
+      "el": "Λονδίνο",
+      "en": "London",
+      "eu": "Londres",
+      "fa": "لندن",
+      "feature_name": "London",
+      "fi": "Lontoo",
+      "fr": "Londres",
+      "gl": "Londres",
+      "he": "לונדון",
+      "hi": "लंदन",
+      "hr": "London",
+      "hu": "London",
+      "id": "London",
+      "it": "Londra",
+      "ja": "ロンドン",
+      "la": "Londinium",
+      "lt": "Londonas",
+      "mk": "Лондон",
+      "nl": "Londen",
+      "no": "London",
+      "pl": "Londyn",
+      "pt": "Londres",
+      "ro": "Londra",
+      "ru": "Лондон",
+      "sk": "Londýn",
+      "sl": "London",
+      "sr": "Лондон",
+      "th": "ลอนดอน",
+      "tr": "Londra",
+      "vi": "Luân Đôn",
+      "zu": "ILondon"
     },
-    "AdministrativeArea": {
-      "ID": "MNL",
-      "LocalizedName": "Metropolitan Manila"
-    }
+    "lat": 51.5085,
+    "lon": -0.1257,
+    "country": "GB"
   },
   {
-    "Version": 1,
-    "Key": "42471",
-    "Type": "City",
-    "Rank": 21,
-    "LocalizedName": "Manaus",
-    "Country": {
-      "ID": "BR",
-      "LocalizedName": "Brazil"
+    "name": "Islington",
+    "local_names": {
+      "ascii": "Islington",
+      "az": "İslinqton",
+      "fa": "ایزلینتن",
+      "feature_name": "Islington",
+      "fr": "District londonien d'Islington",
+      "he": "איזלינגטון",
+      "ja": "イズリントン",
+      "ru": "Ислингтон"
     },
-    "AdministrativeArea": {
-      "ID": "AM",
-      "LocalizedName": "Amazonas"
-    }
+    "lat": 51.5362,
+    "lon": -0.103,
+    "country": "GB"
   },
   {
-    "Version": 1,
-    "Key": "244163",
-    "Type": "City",
-    "Rank": 21,
-    "LocalizedName": "Mandalay",
-    "Country": {
-      "ID": "MM",
-      "LocalizedName": "Myanmar"
+    "name": "Lewisham",
+    "local_names": {
+      "ascii": "Lewisham",
+      "de": "London Borough of Lewisham",
+      "en": "Lewisham",
+      "feature_name": "Lewisham",
+      "fi": "Lewisham",
+      "fr": "Lewisham",
+      "hu": "Lewisham kerület",
+      "nl": "Lewisham",
+      "no": "Lewisham",
+      "ro": "Lewisham"
     },
-    "AdministrativeArea": {
-      "ID": "04",
-      "LocalizedName": "Mandalay"
-    }
+    "lat": 51.4535,
+    "lon": -0.018,
+    "country": "GB"
   },
   {
-    "Version": 1,
-    "Key": "2622750",
-    "Type": "City",
-    "Rank": 25,
-    "LocalizedName": "Manhattan",
-    "Country": {
-      "ID": "US",
-      "LocalizedName": "United States"
+    "name": "Islington",
+    "local_names": {
+      "ascii": "Islington",
+      "de": "London Borough of Islington",
+      "en": "Islington",
+      "feature_name": "Islington",
+      "fr": "Islington",
+      "nl": "Islington",
+      "no": "Islington",
+      "ro": "Islington"
     },
-    "AdministrativeArea": {
-      "ID": "NY",
-      "LocalizedName": "New York"
-    }
-  },
-  {
-    "Version": 1,
-    "Key": "107719",
-    "Type": "City",
-    "Rank": 31,
-    "LocalizedName": "Manizales",
-    "Country": {
-      "ID": "CO",
-      "LocalizedName": "Colombia"
-    },
-    "AdministrativeArea": {
-      "ID": "CAL",
-      "LocalizedName": "Caldas"
-    }
-  },
-  {
-    "Version": 1,
-    "Key": "126814",
-    "Type": "City",
-    "Rank": 31,
-    "LocalizedName": "Mansoura",
-    "Country": {
-      "ID": "EG",
-      "LocalizedName": "Egypt"
-    },
-    "AdministrativeArea": {
-      "ID": "DK",
-      "LocalizedName": "Dakahlia"
-    }
-  },
-  {
-    "Version": 1,
-    "Key": "329260",
-    "Type": "City",
-    "Rank": 31,
-    "LocalizedName": "Manchester",
-    "Country": {
-      "ID": "GB",
-      "LocalizedName": "United Kingdom"
-    },
-    "AdministrativeArea": {
-      "ID": "MAN",
-      "LocalizedName": "Manchester"
-    }
-  },
-  {
-    "Version": 1,
-    "Key": "206050",
-    "Type": "City",
-    "Rank": 31,
-    "LocalizedName": "Manado",
-    "Country": {
-      "ID": "ID",
-      "LocalizedName": "Indonesia"
-    },
-    "AdministrativeArea": {
-      "ID": "SA",
-      "LocalizedName": "North Sulawesi"
-    }
-  },
-  {
-    "Version": 1,
-    "Key": "319151",
-    "Type": "City",
-    "Rank": 31,
-    "LocalizedName": "Manisa",
-    "Country": {
-      "ID": "TR",
-      "LocalizedName": "Turkey"
-    },
-    "AdministrativeArea": {
-      "ID": "45",
-      "LocalizedName": "Manisa"
-    }
+    "lat": 51.547,
+    "lon": -0.1094,
+    "country": "GB"
   }
 ];
 
-// Search for string "M"
-// http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${apiKey}&q=M&language=en-GB
-export const searchStringM = [
-  {
-    "Version": 1,
-    "Key": "308526",
-    "Type": "City",
-    "Rank": 10,
-    "LocalizedName": "Madrid",
-    "Country": {
-      "ID": "ES",
-      "LocalizedName": "Spain"
-    },
-    "AdministrativeArea": {
-      "ID": "MD",
-      "LocalizedName": "Madrid"
-    }
-  },
-  {
-    "Version": 1,
-    "Key": "242560",
-    "Type": "City",
-    "Rank": 10,
-    "LocalizedName": "Mexico City",
-    "Country": {
-      "ID": "MX",
-      "LocalizedName": "Mexico"
-    },
-    "AdministrativeArea": {
-      "ID": "CMX",
-      "LocalizedName": "México City"
-    }
-  },
-  {
-    "Version": 1,
-    "Key": "294021",
-    "Type": "City",
-    "Rank": 10,
-    "LocalizedName": "Moscow",
-    "Country": {
-      "ID": "RU",
-      "LocalizedName": "Russia"
-    },
-    "AdministrativeArea": {
-      "ID": "MOW",
-      "LocalizedName": "Moscow"
-    }
-  },
-  {
-    "Version": 1,
-    "Key": "26216",
-    "Type": "City",
-    "Rank": 11,
-    "LocalizedName": "Melbourne",
-    "Country": {
-      "ID": "AU",
-      "LocalizedName": "Australia"
-    },
-    "AdministrativeArea": {
-      "ID": "VIC",
-      "LocalizedName": "Victoria"
-    }
-  },
-  {
-    "Version": 1,
-    "Key": "204842",
-    "Type": "City",
-    "Rank": 11,
-    "LocalizedName": "Mumbai",
-    "Country": {
-      "ID": "IN",
-      "LocalizedName": "India"
-    },
-    "AdministrativeArea": {
-      "ID": "MH",
-      "LocalizedName": "Maharashtra"
-    }
-  },
-  {
-    "Version": 1,
-    "Key": "58192",
-    "Type": "City",
-    "Rank": 13,
-    "LocalizedName": "Maoming",
-    "Country": {
-      "ID": "CN",
-      "LocalizedName": "China"
-    },
-    "AdministrativeArea": {
-      "ID": "GD",
-      "LocalizedName": "Guangdong"
-    }
-  },
-  {
-    "Version": 1,
-    "Key": "58179",
-    "Type": "City",
-    "Rank": 13,
-    "LocalizedName": "Meizhou",
-    "Country": {
-      "ID": "CN",
-      "LocalizedName": "China"
-    },
-    "AdministrativeArea": {
-      "ID": "GD",
-      "LocalizedName": "Guangdong"
-    }
-  },
-  {
-    "Version": 1,
-    "Key": "60974",
-    "Type": "City",
-    "Rank": 13,
-    "LocalizedName": "Mianyang",
-    "Country": {
-      "ID": "CN",
-      "LocalizedName": "China"
-    },
-    "AdministrativeArea": {
-      "ID": "SC",
-      "LocalizedName": "Sichuan"
-    }
-  },
-  {
-    "Version": 1,
-    "Key": "253810",
-    "Type": "City",
-    "Rank": 20,
-    "LocalizedName": "Managua",
-    "Country": {
-      "ID": "NI",
-      "LocalizedName": "Nicaragua"
-    },
-    "AdministrativeArea": {
-      "ID": "MN",
-      "LocalizedName": "Managua"
-    }
-  },
-  {
-    "Version": 1,
-    "Key": "264885",
-    "Type": "City",
-    "Rank": 20,
-    "LocalizedName": "Manila",
-    "Country": {
-      "ID": "PH",
-      "LocalizedName": "Philippines"
-    },
-    "AdministrativeArea": {
-      "ID": "MNL",
-      "LocalizedName": "Metropolitan Manila"
+/**
+ * One call API pulls:
+ * 
+ * - Current Weather
+ * - Minute forecast for 1 hour
+ * - Hourly forecast for 48 hours
+ * - Daily forecast for 7 days
+ * - National weather alerts
+ * - Historical weather data for the previous 5 days
+ * 
+ * https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&exclude=minutely,hourly,alerts
+ */
+export const oneCall = {
+  response: {
+    data: {
+      "lat": 53.5501,
+      "lon": -2.4156,
+      "timezone": "Europe/London",
+      "timezone_offset": 0,
+      "current": {
+          "dt": 1637157247,
+          "sunrise": 1637134770,
+          "sunset": 1637165404,
+          "temp": 10.98,
+          "feels_like": 10.12,
+          "pressure": 1022,
+          "humidity": 76,
+          "dew_point": 6.92,
+          "uvi": 0.4,
+          "clouds": 100,
+          "visibility": 10000,
+          "wind_speed": 3.58,
+          "wind_deg": 266,
+          "wind_gust": 5.81,
+          "weather": [
+              {
+                  "id": 804,
+                  "main": "Clouds",
+                  "description": "overcast clouds",
+                  "icon": "04d"
+              }
+          ]
+      },
+      "daily": [
+          {
+              "dt": 1637146800,
+              "sunrise": 1637134770,
+              "sunset": 1637165404,
+              "moonrise": 1637163540,
+              "moonset": 1637126160,
+              "moon_phase": 0.44,
+              "temp": {
+                  "day": 10.25,
+                  "min": 7.68,
+                  "max": 10.98,
+                  "night": 9.27,
+                  "eve": 9.85,
+                  "morn": 8.06
+              },
+              "feels_like": {
+                  "day": 9.31,
+                  "night": 7.28,
+                  "eve": 7.33,
+                  "morn": 5.33
+              },
+              "pressure": 1022,
+              "humidity": 76,
+              "dew_point": 6.21,
+              "wind_speed": 5.56,
+              "wind_deg": 273,
+              "wind_gust": 11.04,
+              "weather": [
+                  {
+                      "id": 500,
+                      "main": "Rain",
+                      "description": "light rain",
+                      "icon": "10d"
+                  }
+              ],
+              "clouds": 90,
+              "pop": 0.42,
+              "rain": 0.51,
+              "uvi": 0.62
+          },
+          {
+              "dt": 1637233200,
+              "sunrise": 1637221281,
+              "sunset": 1637251720,
+              "moonrise": 1637250780,
+              "moonset": 1637216940,
+              "moon_phase": 0.47,
+              "temp": {
+                  "day": 12.09,
+                  "min": 9.03,
+                  "max": 12.74,
+                  "night": 12.41,
+                  "eve": 12.48,
+                  "morn": 10.07
+              },
+              "feels_like": {
+                  "day": 11.68,
+                  "night": 11.69,
+                  "eve": 11.87,
+                  "morn": 9.33
+              },
+              "pressure": 1026,
+              "humidity": 89,
+              "dew_point": 10.28,
+              "wind_speed": 5.94,
+              "wind_deg": 253,
+              "wind_gust": 12.78,
+              "weather": [
+                  {
+                      "id": 804,
+                      "main": "Clouds",
+                      "description": "overcast clouds",
+                      "icon": "04d"
+                  }
+              ],
+              "clouds": 100,
+              "pop": 0.1,
+              "uvi": 0.29
+          },
+          {
+              "dt": 1637319600,
+              "sunrise": 1637307790,
+              "sunset": 1637338038,
+              "moonrise": 1637338200,
+              "moonset": 1637307780,
+              "moon_phase": 0.5,
+              "temp": {
+                  "day": 12.66,
+                  "min": 11.86,
+                  "max": 12.77,
+                  "night": 11.86,
+                  "eve": 12.25,
+                  "morn": 12.57
+              },
+              "feels_like": {
+                  "day": 11.76,
+                  "night": 10.72,
+                  "eve": 11.15,
+                  "morn": 11.63
+              },
+              "pressure": 1029,
+              "humidity": 68,
+              "dew_point": 6.85,
+              "wind_speed": 5.82,
+              "wind_deg": 269,
+              "wind_gust": 10.74,
+              "weather": [
+                  {
+                      "id": 804,
+                      "main": "Clouds",
+                      "description": "overcast clouds",
+                      "icon": "04d"
+                  }
+              ],
+              "clouds": 100,
+              "pop": 0,
+              "uvi": 0.51
+          },
+          {
+              "dt": 1637406000,
+              "sunrise": 1637394298,
+              "sunset": 1637424359,
+              "moonrise": 1637425980,
+              "moonset": 1637398500,
+              "moon_phase": 0.53,
+              "temp": {
+                  "day": 10.68,
+                  "min": 9.01,
+                  "max": 11.57,
+                  "night": 9.39,
+                  "eve": 9.88,
+                  "morn": 9.07
+              },
+              "feels_like": {
+                  "day": 9.89,
+                  "night": 6.77,
+                  "eve": 7.3,
+                  "morn": 7.24
+              },
+              "pressure": 1023,
+              "humidity": 80,
+              "dew_point": 7.34,
+              "wind_speed": 5.39,
+              "wind_deg": 269,
+              "wind_gust": 11.38,
+              "weather": [
+                  {
+                      "id": 500,
+                      "main": "Rain",
+                      "description": "light rain",
+                      "icon": "10d"
+                  }
+              ],
+              "clouds": 74,
+              "pop": 0.43,
+              "rain": 0.39,
+              "uvi": 0.51
+          },
+          {
+              "dt": 1637492400,
+              "sunrise": 1637480805,
+              "sunset": 1637510683,
+              "moonrise": 1637514240,
+              "moonset": 1637489040,
+              "moon_phase": 0.56,
+              "temp": {
+                  "day": 5.61,
+                  "min": 4.87,
+                  "max": 7.06,
+                  "night": 4.87,
+                  "eve": 5.74,
+                  "morn": 5.12
+              },
+              "feels_like": {
+                  "day": 1.87,
+                  "night": 1.55,
+                  "eve": 2.65,
+                  "morn": 2.76
+              },
+              "pressure": 1021,
+              "humidity": 62,
+              "dew_point": -1.11,
+              "wind_speed": 5.51,
+              "wind_deg": 341,
+              "wind_gust": 12.67,
+              "weather": [
+                  {
+                      "id": 500,
+                      "main": "Rain",
+                      "description": "light rain",
+                      "icon": "10d"
+                  }
+              ],
+              "clouds": 17,
+              "pop": 0.5,
+              "rain": 0.46,
+              "uvi": 0.5
+          },
+          {
+              "dt": 1637578800,
+              "sunrise": 1637567310,
+              "sunset": 1637597009,
+              "moonrise": 1637603160,
+              "moonset": 1637579100,
+              "moon_phase": 0.59,
+              "temp": {
+                  "day": 6.21,
+                  "min": 2.94,
+                  "max": 6.21,
+                  "night": 3.22,
+                  "eve": 4,
+                  "morn": 2.94
+              },
+              "feels_like": {
+                  "day": 3.8,
+                  "night": 1.4,
+                  "eve": 2.02,
+                  "morn": 0.14
+              },
+              "pressure": 1034,
+              "humidity": 67,
+              "dew_point": 0.55,
+              "wind_speed": 3.36,
+              "wind_deg": 0,
+              "wind_gust": 9.38,
+              "weather": [
+                  {
+                      "id": 800,
+                      "main": "Clear",
+                      "description": "clear sky",
+                      "icon": "01d"
+                  }
+              ],
+              "clouds": 8,
+              "pop": 0,
+              "uvi": 1
+          },
+          {
+              "dt": 1637665200,
+              "sunrise": 1637653815,
+              "sunset": 1637683339,
+              "moonrise": 1637692800,
+              "moonset": 1637668560,
+              "moon_phase": 0.62,
+              "temp": {
+                  "day": 5.85,
+                  "min": 2.47,
+                  "max": 5.85,
+                  "night": 2.8,
+                  "eve": 3.33,
+                  "morn": 2.47
+              },
+              "feels_like": {
+                  "day": 5.85,
+                  "night": 2.8,
+                  "eve": 3.33,
+                  "morn": 2.47
+              },
+              "pressure": 1032,
+              "humidity": 63,
+              "dew_point": -0.55,
+              "wind_speed": 1.62,
+              "wind_deg": 33,
+              "wind_gust": 3.13,
+              "weather": [
+                  {
+                      "id": 800,
+                      "main": "Clear",
+                      "description": "clear sky",
+                      "icon": "01d"
+                  }
+              ],
+              "clouds": 9,
+              "pop": 0,
+              "uvi": 1
+          },
+          {
+              "dt": 1637751600,
+              "sunrise": 1637740318,
+              "sunset": 1637769671,
+              "moonrise": 1637783160,
+              "moonset": 1637757240,
+              "moon_phase": 0.65,
+              "temp": {
+                  "day": 5.24,
+                  "min": 2.53,
+                  "max": 5.24,
+                  "night": 2.75,
+                  "eve": 4.23,
+                  "morn": 4.38
+              },
+              "feels_like": {
+                  "day": 3.4,
+                  "night": 0.34,
+                  "eve": 2.22,
+                  "morn": 2.98
+              },
+              "pressure": 1012,
+              "humidity": 91,
+              "dew_point": 3.93,
+              "wind_speed": 2.39,
+              "wind_deg": 353,
+              "wind_gust": 6.78,
+              "weather": [
+                  {
+                      "id": 500,
+                      "main": "Rain",
+                      "description": "light rain",
+                      "icon": "10d"
+                  }
+              ],
+              "clouds": 100,
+              "pop": 0.76,
+              "rain": 2.64,
+              "uvi": 1
+          }
+      ]
     }
   }
-];
+}
 
-// Pull current conditions for Manchester
-// http://dataservice.accuweather.com/currentconditions/v1/${locationKey}?apikey=${apiKey}&language=en-GB&details=true
-export const currentConditions = [
-    {
-      "LocalObservationDateTime": "2021-11-11T10:07:00+00:00",
-      "EpochTime": 1636625220,
-      "WeatherText": "Cloudy",
-      "WeatherIcon": 7,
-      "HasPrecipitation": false,
-      "PrecipitationType": null,
-      "IsDayTime": true,
-      "Temperature": {
-        "Metric": {
-          "Value": 11.1,
-          "Unit": "C",
-          "UnitType": 17
-        },
-        "Imperial": {
-          "Value": 52,
-          "Unit": "F",
-          "UnitType": 18
-        }
+export const oneCallTrimmed = {
+  response: {
+    data: {
+      "lat": 53.5501,
+      "lon": -2.4156,
+      "timezone": "Europe/London",
+      "timezone_offset": 0,
+      "current": {
+          "dt": 1637157247,
+          "sunrise": 1637134770,
+          "sunset": 1637165404,
+          "temp": 10.98,
+          "feels_like": 10.12,
+          "humidity": 76,
+          "uvi": 0.4,
+          "wind_speed": 3.58,
+          "wind_deg": 266,
+          "weather": [
+              {
+                  "id": 804,
+                  "main": "Clouds",
+                  "description": "overcast clouds",
+                  "icon": "04d"
+              }
+          ]
       },
-      "RealFeelTemperature": {
-        "Metric": {
-          "Value": 11.5,
-          "Unit": "C",
-          "UnitType": 17
-        },
-        "Imperial": {
-          "Value": 53,
-          "Unit": "F",
-          "UnitType": 18
-        }
-      },
-      "RealFeelTemperatureShade": {
-        "Metric": {
-          "Value": 11.5,
-          "Unit": "C",
-          "UnitType": 17
-        },
-        "Imperial": {
-          "Value": 53,
-          "Unit": "F",
-          "UnitType": 18
-        }
-      },
-      "RelativeHumidity": 75,
-      "IndoorRelativeHumidity": 42,
-      "DewPoint": {
-        "Metric": {
-          "Value": 6.8,
-          "Unit": "C",
-          "UnitType": 17
-        },
-        "Imperial": {
-          "Value": 44,
-          "Unit": "F",
-          "UnitType": 18
-        }
-      },
-      "Wind": {
-        "Direction": {
-          "Degrees": 203,
-          "Localized": "SSW",
-          "English": "SSW"
-        },
-        "Speed": {
-          "Metric": {
-            "Value": 7.9,
-            "Unit": "km/h",
-            "UnitType": 7
+      "daily": [
+          {
+              "dt": 1637146800,
+              "sunrise": 1637134770,
+              "sunset": 1637165404,
+              "temp": {
+                  "min": 7.68,
+                  "max": 10.98,
+              },
+              "humidity": 76,
+              "wind_speed": 5.56,
+              "wind_deg": 273,
+              "weather": [
+                  {
+                      "id": 500,
+                      "main": "Rain",
+                      "description": "light rain",
+                      "icon": "10d"
+                  }
+              ],
+              "pop": 0.42,
+              "uvi": 0.62
           },
-          "Imperial": {
-            "Value": 4.9,
-            "Unit": "mi/h",
-            "UnitType": 9
-          }
-        }
-      },
-      "WindGust": {
-        "Speed": {
-          "Metric": {
-            "Value": 12.8,
-            "Unit": "km/h",
-            "UnitType": 7
+          {
+              "dt": 1637233200,
+              "sunrise": 1637221281,
+              "sunset": 1637251720,
+              "temp": {
+                  "min": 9.03,
+                  "max": 12.74,
+              },
+              "humidity": 89,
+              "wind_speed": 5.94,
+              "wind_deg": 253,
+              "weather": [
+                  {
+                      "id": 804,
+                      "main": "Clouds",
+                      "description": "overcast clouds",
+                      "icon": "04d"
+                  }
+              ],
+              "pop": 0.1,
+              "uvi": 0.29
           },
-          "Imperial": {
-            "Value": 8,
-            "Unit": "mi/h",
-            "UnitType": 9
-          }
-        }
-      },
-      "UVIndex": 1,
-      "UVIndexText": "Low",
-      "Visibility": {
-        "Metric": {
-          "Value": 16.1,
-          "Unit": "km",
-          "UnitType": 6
-        },
-        "Imperial": {
-          "Value": 10,
-          "Unit": "mi",
-          "UnitType": 2
-        }
-      },
-      "ObstructionsToVisibility": "",
-      "CloudCover": 91,
-      "Ceiling": {
-        "Metric": {
-          "Value": 610,
-          "Unit": "m",
-          "UnitType": 5
-        },
-        "Imperial": {
-          "Value": 2000,
-          "Unit": "ft",
-          "UnitType": 0
-        }
-      },
-      "Pressure": {
-        "Metric": {
-          "Value": 1022,
-          "Unit": "mb",
-          "UnitType": 14
-        },
-        "Imperial": {
-          "Value": 30.18,
-          "Unit": "inHg",
-          "UnitType": 12
-        }
-      },
-      "PressureTendency": {
-        "LocalizedText": "Steady",
-        "Code": "S"
-      },
-      "Past24HourTemperatureDeparture": {
-        "Metric": {
-          "Value": 0.7,
-          "Unit": "C",
-          "UnitType": 17
-        },
-        "Imperial": {
-          "Value": 1,
-          "Unit": "F",
-          "UnitType": 18
-        }
-      },
-      "ApparentTemperature": {
-        "Metric": {
-          "Value": 13.9,
-          "Unit": "C",
-          "UnitType": 17
-        },
-        "Imperial": {
-          "Value": 57,
-          "Unit": "F",
-          "UnitType": 18
-        }
-      },
-      "WindChillTemperature": {
-        "Metric": {
-          "Value": 11.1,
-          "Unit": "C",
-          "UnitType": 17
-        },
-        "Imperial": {
-          "Value": 52,
-          "Unit": "F",
-          "UnitType": 18
-        }
-      },
-      "WetBulbTemperature": {
-        "Metric": {
-          "Value": 9,
-          "Unit": "C",
-          "UnitType": 17
-        },
-        "Imperial": {
-          "Value": 48,
-          "Unit": "F",
-          "UnitType": 18
-        }
-      },
-      "Precip1hr": {
-        "Metric": {
-          "Value": 0,
-          "Unit": "mm",
-          "UnitType": 3
-        },
-        "Imperial": {
-          "Value": 0,
-          "Unit": "in",
-          "UnitType": 1
-        }
-      },
-      "PrecipitationSummary": {
-        "Precipitation": {
-          "Metric": {
-            "Value": 0,
-            "Unit": "mm",
-            "UnitType": 3
+          {
+              "dt": 1637319600,
+              "sunrise": 1637307790,
+              "sunset": 1637338038,
+              "temp": {
+                  "min": 11.86,
+                  "max": 12.77,
+              },
+              "humidity": 68,
+              "wind_speed": 5.82,
+              "wind_deg": 269,
+              "weather": [
+                  {
+                      "id": 804,
+                      "main": "Clouds",
+                      "description": "overcast clouds",
+                      "icon": "04d"
+                  }
+              ],
+              "pop": 0,
+              "uvi": 0.51
           },
-          "Imperial": {
-            "Value": 0,
-            "Unit": "in",
-            "UnitType": 1
-          }
-        },
-        "PastHour": {
-          "Metric": {
-            "Value": 0,
-            "Unit": "mm",
-            "UnitType": 3
+          {
+              "dt": 1637406000,
+              "sunrise": 1637394298,
+              "sunset": 1637424359,
+              "temp": {
+                  "min": 9.01,
+                  "max": 11.57,
+              },
+              "humidity": 80,
+              "wind_speed": 5.39,
+              "wind_deg": 269,
+              "weather": [
+                  {
+                      "id": 500,
+                      "main": "Rain",
+                      "description": "light rain",
+                      "icon": "10d"
+                  }
+              ],
+              "pop": 0.43,
+              "uvi": 0.51
           },
-          "Imperial": {
-            "Value": 0,
-            "Unit": "in",
-            "UnitType": 1
-          }
-        },
-        "Past3Hours": {
-          "Metric": {
-            "Value": 0,
-            "Unit": "mm",
-            "UnitType": 3
+          {
+              "dt": 1637492400,
+              "sunrise": 1637480805,
+              "sunset": 1637510683,
+              "temp": {
+                  "min": 4.87,
+                  "max": 7.06,
+              },
+              "humidity": 62,
+              "wind_speed": 5.51,
+              "wind_deg": 341,
+              "weather": [
+                  {
+                      "id": 500,
+                      "main": "Rain",
+                      "description": "light rain",
+                      "icon": "10d"
+                  }
+              ],
+              "pop": 0.5,
+              "uvi": 0.5
           },
-          "Imperial": {
-            "Value": 0,
-            "Unit": "in",
-            "UnitType": 1
-          }
-        },
-        "Past6Hours": {
-          "Metric": {
-            "Value": 0,
-            "Unit": "mm",
-            "UnitType": 3
+          {
+              "dt": 1637578800,
+              "sunrise": 1637567310,
+              "sunset": 1637597009,
+              "temp": {
+                  "min": 2.94,
+                  "max": 6.21,
+              },
+              "humidity": 67,
+              "wind_speed": 3.36,
+              "wind_deg": 0,
+              "weather": [
+                  {
+                      "id": 800,
+                      "main": "Clear",
+                      "description": "clear sky",
+                      "icon": "01d"
+                  }
+              ],
+              "pop": 0,
+              "uvi": 1
           },
-          "Imperial": {
-            "Value": 0,
-            "Unit": "in",
-            "UnitType": 1
-          }
-        },
-        "Past9Hours": {
-          "Metric": {
-            "Value": 0,
-            "Unit": "mm",
-            "UnitType": 3
+          {
+              "dt": 1637665200,
+              "sunrise": 1637653815,
+              "sunset": 1637683339,
+              "temp": {
+                  "min": 2.47,
+                  "max": 5.85,
+              },
+              "humidity": 63,
+              "wind_speed": 1.62,
+              "wind_deg": 33,
+              "weather": [
+                  {
+                      "id": 800,
+                      "main": "Clear",
+                      "description": "clear sky",
+                      "icon": "01d"
+                  }
+              ],
+              "pop": 0,
+              "uvi": 1
           },
-          "Imperial": {
-            "Value": 0,
-            "Unit": "in",
-            "UnitType": 1
+          {
+              "dt": 1637751600,
+              "sunrise": 1637740318,
+              "sunset": 1637769671,
+              "temp": {
+                  "min": 2.53,
+                  "max": 5.24,
+              },
+              "humidity": 91,
+              "wind_speed": 2.39,
+              "wind_deg": 353,
+              "weather": [
+                  {
+                      "id": 500,
+                      "main": "Rain",
+                      "description": "light rain",
+                      "icon": "10d"
+                  }
+              ],
+              "pop": 0.76,
+              "uvi": 1
           }
-        },
-        "Past12Hours": {
-          "Metric": {
-            "Value": 0,
-            "Unit": "mm",
-            "UnitType": 3
-          },
-          "Imperial": {
-            "Value": 0,
-            "Unit": "in",
-            "UnitType": 1
-          }
-        },
-        "Past18Hours": {
-          "Metric": {
-            "Value": 0,
-            "Unit": "mm",
-            "UnitType": 3
-          },
-          "Imperial": {
-            "Value": 0,
-            "Unit": "in",
-            "UnitType": 1
-          }
-        },
-        "Past24Hours": {
-          "Metric": {
-            "Value": 0,
-            "Unit": "mm",
-            "UnitType": 3
-          },
-          "Imperial": {
-            "Value": 0,
-            "Unit": "in",
-            "UnitType": 1
-          }
-        }
-      },
-      "TemperatureSummary": {
-        "Past6HourRange": {
-          "Minimum": {
-            "Metric": {
-              "Value": 7.8,
-              "Unit": "C",
-              "UnitType": 17
-            },
-            "Imperial": {
-              "Value": 46,
-              "Unit": "F",
-              "UnitType": 18
-            }
-          },
-          "Maximum": {
-            "Metric": {
-              "Value": 11.1,
-              "Unit": "C",
-              "UnitType": 17
-            },
-            "Imperial": {
-              "Value": 52,
-              "Unit": "F",
-              "UnitType": 18
-            }
-          }
-        },
-        "Past12HourRange": {
-          "Minimum": {
-            "Metric": {
-              "Value": 7.8,
-              "Unit": "C",
-              "UnitType": 17
-            },
-            "Imperial": {
-              "Value": 46,
-              "Unit": "F",
-              "UnitType": 18
-            }
-          },
-          "Maximum": {
-            "Metric": {
-              "Value": 11.1,
-              "Unit": "C",
-              "UnitType": 17
-            },
-            "Imperial": {
-              "Value": 52,
-              "Unit": "F",
-              "UnitType": 18
-            }
-          }
-        },
-        "Past24HourRange": {
-          "Minimum": {
-            "Metric": {
-              "Value": 7.8,
-              "Unit": "C",
-              "UnitType": 17
-            },
-            "Imperial": {
-              "Value": 46,
-              "Unit": "F",
-              "UnitType": 18
-            }
-          },
-          "Maximum": {
-            "Metric": {
-              "Value": 11.3,
-              "Unit": "C",
-              "UnitType": 17
-            },
-            "Imperial": {
-              "Value": 52,
-              "Unit": "F",
-              "UnitType": 18
-            }
-          }
-        }
-      },
-      "MobileLink": "http://www.accuweather.com/en/gb/manchester/m15-6/current-weather/329260?lang=en-gb",
-      "Link": "http://www.accuweather.com/en/gb/manchester/m15-6/current-weather/329260?lang=en-gb"
+      ]
     }
-];
-
-// Pull five day forecast for Manchester
-// http://dataservice.accuweather.com/forecasts/v1/daily/5day/329260?apikey=8IkAMu7Km3GRRYAkhKSYD7ljbFl4Urfo&language=en-GB&details=true&metric=true
-export const fiveDayForecastDummy = {
-  "Headline": {
-    "EffectiveDate": "2021-11-12T07:00:00+00:00",
-    "EffectiveEpochDate": 1636700400,
-    "Severity": 3,
-    "Text": "Expect showery weather Friday morning until late on Friday night",
-    "Category": "rain",
-    "EndDate": "2021-11-13T07:00:00+00:00",
-    "EndEpochDate": 1636786800,
-    "MobileLink": "http://www.accuweather.com/en/gb/manchester/m15-6/daily-weather-forecast/329260?unit=c&lang=en-gb",
-    "Link": "http://www.accuweather.com/en/gb/manchester/m15-6/daily-weather-forecast/329260?unit=c&lang=en-gb"
-  },
-  "DailyForecasts": [
-    {
-      "Date": "2021-11-12T07:00:00+00:00",
-      "EpochDate": 1636700400,
-      "Sun": {
-        "Rise": "2021-11-12T07:28:00+00:00",
-        "EpochRise": 1636702080,
-        "Set": "2021-11-12T16:17:00+00:00",
-        "EpochSet": 1636733820
-      },
-      "Moon": {
-        "Rise": "2021-11-12T14:38:00+00:00",
-        "EpochRise": 1636727880,
-        "Set": "2021-11-13T00:16:00+00:00",
-        "EpochSet": 1636762560,
-        "Phase": "WaxingGibbous",
-        "Age": 8
-      },
-      "Temperature": {
-        "Minimum": {
-          "Value": 10.1,
-          "Unit": "C",
-          "UnitType": 17
-        },
-        "Maximum": {
-          "Value": 12.7,
-          "Unit": "C",
-          "UnitType": 17
-        }
-      },
-      "RealFeelTemperature": {
-        "Minimum": {
-          "Value": 6.4,
-          "Unit": "C",
-          "UnitType": 17
-        },
-        "Maximum": {
-          "Value": 10.3,
-          "Unit": "C",
-          "UnitType": 17
-        }
-      },
-      "RealFeelTemperatureShade": {
-        "Minimum": {
-          "Value": 6.4,
-          "Unit": "C",
-          "UnitType": 17
-        },
-        "Maximum": {
-          "Value": 10.3,
-          "Unit": "C",
-          "UnitType": 17
-        }
-      },
-      "HoursOfSun": 1,
-      "DegreeDaySummary": {
-        "Heating": {
-          "Value": 7,
-          "Unit": "C",
-          "UnitType": 17
-        },
-        "Cooling": {
-          "Value": 0,
-          "Unit": "C",
-          "UnitType": 17
-        }
-      },
-      "AirAndPollen": [
-        {
-          "Name": "AirQuality",
-          "Value": 0,
-          "Category": "Good",
-          "CategoryValue": 1,
-          "Type": "Ozone"
-        },
-        {
-          "Name": "Grass",
-          "Value": 0,
-          "Category": "Low",
-          "CategoryValue": 1
-        },
-        {
-          "Name": "Mold",
-          "Value": 0,
-          "Category": "Low",
-          "CategoryValue": 1
-        },
-        {
-          "Name": "Ragweed",
-          "Value": 0,
-          "Category": "Low",
-          "CategoryValue": 1
-        },
-        {
-          "Name": "Tree",
-          "Value": 0,
-          "Category": "Low",
-          "CategoryValue": 1
-        },
-        {
-          "Name": "UVIndex",
-          "Value": 0,
-          "Category": "Low",
-          "CategoryValue": 1
-        }
-      ],
-      "Day": {
-        "Icon": 12,
-        "IconPhrase": "Showers",
-        "HasPrecipitation": true,
-        "PrecipitationType": "Rain",
-        "PrecipitationIntensity": "Light",
-        "ShortPhrase": "Mostly cloudy, a little rain",
-        "LongPhrase": "Mostly cloudy with a little rain",
-        "PrecipitationProbability": 95,
-        "ThunderstormProbability": 0,
-        "RainProbability": 95,
-        "SnowProbability": 0,
-        "IceProbability": 0,
-        "Wind": {
-          "Speed": {
-            "Value": 16.7,
-            "Unit": "km/h",
-            "UnitType": 7
-          },
-          "Direction": {
-            "Degrees": 221,
-            "Localized": "SW",
-            "English": "SW"
-          }
-        },
-        "WindGust": {
-          "Speed": {
-            "Value": 31.5,
-            "Unit": "km/h",
-            "UnitType": 7
-          },
-          "Direction": {
-            "Degrees": 183,
-            "Localized": "S",
-            "English": "S"
-          }
-        },
-        "TotalLiquid": {
-          "Value": 4.5,
-          "Unit": "mm",
-          "UnitType": 3
-        },
-        "Rain": {
-          "Value": 4.5,
-          "Unit": "mm",
-          "UnitType": 3
-        },
-        "Snow": {
-          "Value": 0,
-          "Unit": "cm",
-          "UnitType": 4
-        },
-        "Ice": {
-          "Value": 0,
-          "Unit": "mm",
-          "UnitType": 3
-        },
-        "HoursOfPrecipitation": 2,
-        "HoursOfRain": 2,
-        "HoursOfSnow": 0,
-        "HoursOfIce": 0,
-        "CloudCover": 96,
-        "Evapotranspiration": {
-          "Value": 0,
-          "Unit": "mm",
-          "UnitType": 3
-        },
-        "SolarIrradiance": {
-          "Value": 0.6,
-          "Unit": "W/m²",
-          "UnitType": 33
-        }
-      },
-      "Night": {
-        "Icon": 40,
-        "IconPhrase": "Mostly cloudy w/ showers",
-        "HasPrecipitation": true,
-        "PrecipitationType": "Rain",
-        "PrecipitationIntensity": "Light",
-        "ShortPhrase": "A passing shower or two",
-        "LongPhrase": "Mostly cloudy with a brief shower or two",
-        "PrecipitationProbability": 63,
-        "ThunderstormProbability": 13,
-        "RainProbability": 63,
-        "SnowProbability": 0,
-        "IceProbability": 0,
-        "Wind": {
-          "Speed": {
-            "Value": 18.5,
-            "Unit": "km/h",
-            "UnitType": 7
-          },
-          "Direction": {
-            "Degrees": 289,
-            "Localized": "WNW",
-            "English": "WNW"
-          }
-        },
-        "WindGust": {
-          "Speed": {
-            "Value": 27.8,
-            "Unit": "km/h",
-            "UnitType": 7
-          },
-          "Direction": {
-            "Degrees": 277,
-            "Localized": "W",
-            "English": "W"
-          }
-        },
-        "TotalLiquid": {
-          "Value": 4.1,
-          "Unit": "mm",
-          "UnitType": 3
-        },
-        "Rain": {
-          "Value": 4.1,
-          "Unit": "mm",
-          "UnitType": 3
-        },
-        "Snow": {
-          "Value": 0,
-          "Unit": "cm",
-          "UnitType": 4
-        },
-        "Ice": {
-          "Value": 0,
-          "Unit": "mm",
-          "UnitType": 3
-        },
-        "HoursOfPrecipitation": 2,
-        "HoursOfRain": 2,
-        "HoursOfSnow": 0,
-        "HoursOfIce": 0,
-        "CloudCover": 90,
-        "Evapotranspiration": {
-          "Value": 0,
-          "Unit": "mm",
-          "UnitType": 3
-        },
-        "SolarIrradiance": {
-          "Value": 0,
-          "Unit": "W/m²",
-          "UnitType": 33
-        }
-      },
-      "Sources": [
-        "AccuWeather"
-      ],
-      "MobileLink": "http://www.accuweather.com/en/gb/manchester/m15-6/daily-weather-forecast/329260?day=1&unit=c&lang=en-gb",
-      "Link": "http://www.accuweather.com/en/gb/manchester/m15-6/daily-weather-forecast/329260?day=1&unit=c&lang=en-gb"
-    },
-    {
-      "Date": "2021-11-13T07:00:00+00:00",
-      "EpochDate": 1636786800,
-      "Sun": {
-        "Rise": "2021-11-13T07:30:00+00:00",
-        "EpochRise": 1636788600,
-        "Set": "2021-11-13T16:16:00+00:00",
-        "EpochSet": 1636820160
-      },
-      "Moon": {
-        "Rise": "2021-11-13T14:52:00+00:00",
-        "EpochRise": 1636815120,
-        "Set": "2021-11-14T01:34:00+00:00",
-        "EpochSet": 1636853640,
-        "Phase": "WaxingGibbous",
-        "Age": 9
-      },
-      "Temperature": {
-        "Minimum": {
-          "Value": 6.4,
-          "Unit": "C",
-          "UnitType": 17
-        },
-        "Maximum": {
-          "Value": 12.5,
-          "Unit": "C",
-          "UnitType": 17
-        }
-      },
-      "RealFeelTemperature": {
-        "Minimum": {
-          "Value": 6.7,
-          "Unit": "C",
-          "UnitType": 17
-        },
-        "Maximum": {
-          "Value": 12.4,
-          "Unit": "C",
-          "UnitType": 17
-        }
-      },
-      "RealFeelTemperatureShade": {
-        "Minimum": {
-          "Value": 6.7,
-          "Unit": "C",
-          "UnitType": 17
-        },
-        "Maximum": {
-          "Value": 12.4,
-          "Unit": "C",
-          "UnitType": 17
-        }
-      },
-      "HoursOfSun": 1.2,
-      "DegreeDaySummary": {
-        "Heating": {
-          "Value": 9,
-          "Unit": "C",
-          "UnitType": 17
-        },
-        "Cooling": {
-          "Value": 0,
-          "Unit": "C",
-          "UnitType": 17
-        }
-      },
-      "AirAndPollen": [
-        {
-          "Name": "AirQuality",
-          "Value": 0,
-          "Category": "Good",
-          "CategoryValue": 1,
-          "Type": "Ozone"
-        },
-        {
-          "Name": "Grass",
-          "Value": 0,
-          "Category": "Low",
-          "CategoryValue": 1
-        },
-        {
-          "Name": "Mold",
-          "Value": 0,
-          "Category": "Low",
-          "CategoryValue": 1
-        },
-        {
-          "Name": "Ragweed",
-          "Value": 0,
-          "Category": "Low",
-          "CategoryValue": 1
-        },
-        {
-          "Name": "Tree",
-          "Value": 0,
-          "Category": "Low",
-          "CategoryValue": 1
-        },
-        {
-          "Name": "UVIndex",
-          "Value": 1,
-          "Category": "Low",
-          "CategoryValue": 1
-        }
-      ],
-      "Day": {
-        "Icon": 8,
-        "IconPhrase": "Dreary",
-        "HasPrecipitation": false,
-        "ShortPhrase": "Low clouds",
-        "LongPhrase": "Low clouds",
-        "PrecipitationProbability": 3,
-        "ThunderstormProbability": 0,
-        "RainProbability": 3,
-        "SnowProbability": 0,
-        "IceProbability": 0,
-        "Wind": {
-          "Speed": {
-            "Value": 7.4,
-            "Unit": "km/h",
-            "UnitType": 7
-          },
-          "Direction": {
-            "Degrees": 313,
-            "Localized": "NW",
-            "English": "NW"
-          }
-        },
-        "WindGust": {
-          "Speed": {
-            "Value": 11.1,
-            "Unit": "km/h",
-            "UnitType": 7
-          },
-          "Direction": {
-            "Degrees": 303,
-            "Localized": "WNW",
-            "English": "WNW"
-          }
-        },
-        "TotalLiquid": {
-          "Value": 0,
-          "Unit": "mm",
-          "UnitType": 3
-        },
-        "Rain": {
-          "Value": 0,
-          "Unit": "mm",
-          "UnitType": 3
-        },
-        "Snow": {
-          "Value": 0,
-          "Unit": "cm",
-          "UnitType": 4
-        },
-        "Ice": {
-          "Value": 0,
-          "Unit": "mm",
-          "UnitType": 3
-        },
-        "HoursOfPrecipitation": 0,
-        "HoursOfRain": 0,
-        "HoursOfSnow": 0,
-        "HoursOfIce": 0,
-        "CloudCover": 95,
-        "Evapotranspiration": {
-          "Value": 0,
-          "Unit": "mm",
-          "UnitType": 3
-        },
-        "SolarIrradiance": {
-          "Value": 0.7,
-          "Unit": "W/m²",
-          "UnitType": 33
-        }
-      },
-      "Night": {
-        "Icon": 38,
-        "IconPhrase": "Mostly cloudy",
-        "HasPrecipitation": false,
-        "ShortPhrase": "Areas of low clouds",
-        "LongPhrase": "Areas of low clouds",
-        "PrecipitationProbability": 3,
-        "ThunderstormProbability": 0,
-        "RainProbability": 3,
-        "SnowProbability": 0,
-        "IceProbability": 0,
-        "Wind": {
-          "Speed": {
-            "Value": 5.6,
-            "Unit": "km/h",
-            "UnitType": 7
-          },
-          "Direction": {
-            "Degrees": 20,
-            "Localized": "NNE",
-            "English": "NNE"
-          }
-        },
-        "WindGust": {
-          "Speed": {
-            "Value": 9.3,
-            "Unit": "km/h",
-            "UnitType": 7
-          },
-          "Direction": {
-            "Degrees": 46,
-            "Localized": "NE",
-            "English": "NE"
-          }
-        },
-        "TotalLiquid": {
-          "Value": 0,
-          "Unit": "mm",
-          "UnitType": 3
-        },
-        "Rain": {
-          "Value": 0,
-          "Unit": "mm",
-          "UnitType": 3
-        },
-        "Snow": {
-          "Value": 0,
-          "Unit": "cm",
-          "UnitType": 4
-        },
-        "Ice": {
-          "Value": 0,
-          "Unit": "mm",
-          "UnitType": 3
-        },
-        "HoursOfPrecipitation": 0,
-        "HoursOfRain": 0,
-        "HoursOfSnow": 0,
-        "HoursOfIce": 0,
-        "CloudCover": 76,
-        "Evapotranspiration": {
-          "Value": 0,
-          "Unit": "mm",
-          "UnitType": 3
-        },
-        "SolarIrradiance": {
-          "Value": 0,
-          "Unit": "W/m²",
-          "UnitType": 33
-        }
-      },
-      "Sources": [
-        "AccuWeather"
-      ],
-      "MobileLink": "http://www.accuweather.com/en/gb/manchester/m15-6/daily-weather-forecast/329260?day=2&unit=c&lang=en-gb",
-      "Link": "http://www.accuweather.com/en/gb/manchester/m15-6/daily-weather-forecast/329260?day=2&unit=c&lang=en-gb"
-    },
-    {
-      "Date": "2021-11-14T07:00:00+00:00",
-      "EpochDate": 1636873200,
-      "Sun": {
-        "Rise": "2021-11-14T07:32:00+00:00",
-        "EpochRise": 1636875120,
-        "Set": "2021-11-14T16:14:00+00:00",
-        "EpochSet": 1636906440
-      },
-      "Moon": {
-        "Rise": "2021-11-14T15:04:00+00:00",
-        "EpochRise": 1636902240,
-        "Set": "2021-11-15T02:49:00+00:00",
-        "EpochSet": 1636944540,
-        "Phase": "WaxingGibbous",
-        "Age": 10
-      },
-      "Temperature": {
-        "Minimum": {
-          "Value": 6.9,
-          "Unit": "C",
-          "UnitType": 17
-        },
-        "Maximum": {
-          "Value": 12,
-          "Unit": "C",
-          "UnitType": 17
-        }
-      },
-      "RealFeelTemperature": {
-        "Minimum": {
-          "Value": 8.4,
-          "Unit": "C",
-          "UnitType": 17
-        },
-        "Maximum": {
-          "Value": 11.7,
-          "Unit": "C",
-          "UnitType": 17
-        }
-      },
-      "RealFeelTemperatureShade": {
-        "Minimum": {
-          "Value": 8.4,
-          "Unit": "C",
-          "UnitType": 17
-        },
-        "Maximum": {
-          "Value": 11.7,
-          "Unit": "C",
-          "UnitType": 17
-        }
-      },
-      "HoursOfSun": 1,
-      "DegreeDaySummary": {
-        "Heating": {
-          "Value": 9,
-          "Unit": "C",
-          "UnitType": 17
-        },
-        "Cooling": {
-          "Value": 0,
-          "Unit": "C",
-          "UnitType": 17
-        }
-      },
-      "AirAndPollen": [
-        {
-          "Name": "AirQuality",
-          "Value": 0,
-          "Category": "Good",
-          "CategoryValue": 1,
-          "Type": "Ozone"
-        },
-        {
-          "Name": "Grass",
-          "Value": 0,
-          "Category": "Low",
-          "CategoryValue": 1
-        },
-        {
-          "Name": "Mold",
-          "Value": 0,
-          "Category": "Low",
-          "CategoryValue": 1
-        },
-        {
-          "Name": "Ragweed",
-          "Value": 0,
-          "Category": "Low",
-          "CategoryValue": 1
-        },
-        {
-          "Name": "Tree",
-          "Value": 0,
-          "Category": "Low",
-          "CategoryValue": 1
-        },
-        {
-          "Name": "UVIndex",
-          "Value": 0,
-          "Category": "Low",
-          "CategoryValue": 1
-        }
-      ],
-      "Day": {
-        "Icon": 8,
-        "IconPhrase": "Dreary",
-        "HasPrecipitation": false,
-        "ShortPhrase": "Low clouds",
-        "LongPhrase": "Low clouds",
-        "PrecipitationProbability": 5,
-        "ThunderstormProbability": 0,
-        "RainProbability": 5,
-        "SnowProbability": 0,
-        "IceProbability": 0,
-        "Wind": {
-          "Speed": {
-            "Value": 7.4,
-            "Unit": "km/h",
-            "UnitType": 7
-          },
-          "Direction": {
-            "Degrees": 81,
-            "Localized": "E",
-            "English": "E"
-          }
-        },
-        "WindGust": {
-          "Speed": {
-            "Value": 11.1,
-            "Unit": "km/h",
-            "UnitType": 7
-          },
-          "Direction": {
-            "Degrees": 84,
-            "Localized": "E",
-            "English": "E"
-          }
-        },
-        "TotalLiquid": {
-          "Value": 0,
-          "Unit": "mm",
-          "UnitType": 3
-        },
-        "Rain": {
-          "Value": 0,
-          "Unit": "mm",
-          "UnitType": 3
-        },
-        "Snow": {
-          "Value": 0,
-          "Unit": "cm",
-          "UnitType": 4
-        },
-        "Ice": {
-          "Value": 0,
-          "Unit": "mm",
-          "UnitType": 3
-        },
-        "HoursOfPrecipitation": 0,
-        "HoursOfRain": 0,
-        "HoursOfSnow": 0,
-        "HoursOfIce": 0,
-        "CloudCover": 95,
-        "Evapotranspiration": {
-          "Value": 0,
-          "Unit": "mm",
-          "UnitType": 3
-        },
-        "SolarIrradiance": {
-          "Value": 0.7,
-          "Unit": "W/m²",
-          "UnitType": 33
-        }
-      },
-      "Night": {
-        "Icon": 36,
-        "IconPhrase": "Intermittent clouds",
-        "HasPrecipitation": false,
-        "ShortPhrase": "Partly cloudy",
-        "LongPhrase": "Partly cloudy",
-        "PrecipitationProbability": 8,
-        "ThunderstormProbability": 0,
-        "RainProbability": 8,
-        "SnowProbability": 0,
-        "IceProbability": 0,
-        "Wind": {
-          "Speed": {
-            "Value": 3.7,
-            "Unit": "km/h",
-            "UnitType": 7
-          },
-          "Direction": {
-            "Degrees": 112,
-            "Localized": "ESE",
-            "English": "ESE"
-          }
-        },
-        "WindGust": {
-          "Speed": {
-            "Value": 7.4,
-            "Unit": "km/h",
-            "UnitType": 7
-          },
-          "Direction": {
-            "Degrees": 103,
-            "Localized": "ESE",
-            "English": "ESE"
-          }
-        },
-        "TotalLiquid": {
-          "Value": 0,
-          "Unit": "mm",
-          "UnitType": 3
-        },
-        "Rain": {
-          "Value": 0,
-          "Unit": "mm",
-          "UnitType": 3
-        },
-        "Snow": {
-          "Value": 0,
-          "Unit": "cm",
-          "UnitType": 4
-        },
-        "Ice": {
-          "Value": 0,
-          "Unit": "mm",
-          "UnitType": 3
-        },
-        "HoursOfPrecipitation": 0,
-        "HoursOfRain": 0,
-        "HoursOfSnow": 0,
-        "HoursOfIce": 0,
-        "CloudCover": 66,
-        "Evapotranspiration": {
-          "Value": 0,
-          "Unit": "mm",
-          "UnitType": 3
-        },
-        "SolarIrradiance": {
-          "Value": 0,
-          "Unit": "W/m²",
-          "UnitType": 33
-        }
-      },
-      "Sources": [
-        "AccuWeather"
-      ],
-      "MobileLink": "http://www.accuweather.com/en/gb/manchester/m15-6/daily-weather-forecast/329260?day=3&unit=c&lang=en-gb",
-      "Link": "http://www.accuweather.com/en/gb/manchester/m15-6/daily-weather-forecast/329260?day=3&unit=c&lang=en-gb"
-    },
-    {
-      "Date": "2021-11-15T07:00:00+00:00",
-      "EpochDate": 1636959600,
-      "Sun": {
-        "Rise": "2021-11-15T07:34:00+00:00",
-        "EpochRise": 1636961640,
-        "Set": "2021-11-15T16:13:00+00:00",
-        "EpochSet": 1636992780
-      },
-      "Moon": {
-        "Rise": "2021-11-15T15:15:00+00:00",
-        "EpochRise": 1636989300,
-        "Set": "2021-11-16T04:02:00+00:00",
-        "EpochSet": 1637035320,
-        "Phase": "WaxingGibbous",
-        "Age": 11
-      },
-      "Temperature": {
-        "Minimum": {
-          "Value": 6.8,
-          "Unit": "C",
-          "UnitType": 17
-        },
-        "Maximum": {
-          "Value": 11.4,
-          "Unit": "C",
-          "UnitType": 17
-        }
-      },
-      "RealFeelTemperature": {
-        "Minimum": {
-          "Value": 7.6,
-          "Unit": "C",
-          "UnitType": 17
-        },
-        "Maximum": {
-          "Value": 12.4,
-          "Unit": "C",
-          "UnitType": 17
-        }
-      },
-      "RealFeelTemperatureShade": {
-        "Minimum": {
-          "Value": 7.6,
-          "Unit": "C",
-          "UnitType": 17
-        },
-        "Maximum": {
-          "Value": 12.4,
-          "Unit": "C",
-          "UnitType": 17
-        }
-      },
-      "HoursOfSun": 1.8,
-      "DegreeDaySummary": {
-        "Heating": {
-          "Value": 9,
-          "Unit": "C",
-          "UnitType": 17
-        },
-        "Cooling": {
-          "Value": 0,
-          "Unit": "C",
-          "UnitType": 17
-        }
-      },
-      "AirAndPollen": [
-        {
-          "Name": "AirQuality",
-          "Value": 0,
-          "Category": "Good",
-          "CategoryValue": 1,
-          "Type": "Ozone"
-        },
-        {
-          "Name": "Grass",
-          "Value": 0,
-          "Category": "Low",
-          "CategoryValue": 1
-        },
-        {
-          "Name": "Mold",
-          "Value": 0,
-          "Category": "Low",
-          "CategoryValue": 1
-        },
-        {
-          "Name": "Ragweed",
-          "Value": 0,
-          "Category": "Low",
-          "CategoryValue": 1
-        },
-        {
-          "Name": "Tree",
-          "Value": 0,
-          "Category": "Low",
-          "CategoryValue": 1
-        },
-        {
-          "Name": "UVIndex",
-          "Value": 0,
-          "Category": "Low",
-          "CategoryValue": 1
-        }
-      ],
-      "Day": {
-        "Icon": 7,
-        "IconPhrase": "Cloudy",
-        "HasPrecipitation": false,
-        "ShortPhrase": "Areas of low clouds and fog",
-        "LongPhrase": "Areas of low clouds and fog in the morning followed by afternoon low clouds",
-        "PrecipitationProbability": 25,
-        "ThunderstormProbability": 0,
-        "RainProbability": 25,
-        "SnowProbability": 0,
-        "IceProbability": 0,
-        "Wind": {
-          "Speed": {
-            "Value": 3.7,
-            "Unit": "km/h",
-            "UnitType": 7
-          },
-          "Direction": {
-            "Degrees": 163,
-            "Localized": "SSE",
-            "English": "SSE"
-          }
-        },
-        "WindGust": {
-          "Speed": {
-            "Value": 7.4,
-            "Unit": "km/h",
-            "UnitType": 7
-          },
-          "Direction": {
-            "Degrees": 226,
-            "Localized": "SW",
-            "English": "SW"
-          }
-        },
-        "TotalLiquid": {
-          "Value": 0,
-          "Unit": "mm",
-          "UnitType": 3
-        },
-        "Rain": {
-          "Value": 0,
-          "Unit": "mm",
-          "UnitType": 3
-        },
-        "Snow": {
-          "Value": 0,
-          "Unit": "cm",
-          "UnitType": 4
-        },
-        "Ice": {
-          "Value": 0,
-          "Unit": "mm",
-          "UnitType": 3
-        },
-        "HoursOfPrecipitation": 0,
-        "HoursOfRain": 0,
-        "HoursOfSnow": 0,
-        "HoursOfIce": 0,
-        "CloudCover": 88,
-        "Evapotranspiration": {
-          "Value": 0,
-          "Unit": "mm",
-          "UnitType": 3
-        },
-        "SolarIrradiance": {
-          "Value": 0.9,
-          "Unit": "W/m²",
-          "UnitType": 33
-        }
-      },
-      "Night": {
-        "Icon": 8,
-        "IconPhrase": "Dreary",
-        "HasPrecipitation": false,
-        "ShortPhrase": "Low clouds",
-        "LongPhrase": "Low clouds",
-        "PrecipitationProbability": 16,
-        "ThunderstormProbability": 0,
-        "RainProbability": 16,
-        "SnowProbability": 0,
-        "IceProbability": 0,
-        "Wind": {
-          "Speed": {
-            "Value": 3.7,
-            "Unit": "km/h",
-            "UnitType": 7
-          },
-          "Direction": {
-            "Degrees": 161,
-            "Localized": "SSE",
-            "English": "SSE"
-          }
-        },
-        "WindGust": {
-          "Speed": {
-            "Value": 7.4,
-            "Unit": "km/h",
-            "UnitType": 7
-          },
-          "Direction": {
-            "Degrees": 150,
-            "Localized": "SSE",
-            "English": "SSE"
-          }
-        },
-        "TotalLiquid": {
-          "Value": 0,
-          "Unit": "mm",
-          "UnitType": 3
-        },
-        "Rain": {
-          "Value": 0,
-          "Unit": "mm",
-          "UnitType": 3
-        },
-        "Snow": {
-          "Value": 0,
-          "Unit": "cm",
-          "UnitType": 4
-        },
-        "Ice": {
-          "Value": 0,
-          "Unit": "mm",
-          "UnitType": 3
-        },
-        "HoursOfPrecipitation": 0,
-        "HoursOfRain": 0,
-        "HoursOfSnow": 0,
-        "HoursOfIce": 0,
-        "CloudCover": 97,
-        "Evapotranspiration": {
-          "Value": 0,
-          "Unit": "mm",
-          "UnitType": 3
-        },
-        "SolarIrradiance": {
-          "Value": 0,
-          "Unit": "W/m²",
-          "UnitType": 33
-        }
-      },
-      "Sources": [
-        "AccuWeather"
-      ],
-      "MobileLink": "http://www.accuweather.com/en/gb/manchester/m15-6/daily-weather-forecast/329260?day=4&unit=c&lang=en-gb",
-      "Link": "http://www.accuweather.com/en/gb/manchester/m15-6/daily-weather-forecast/329260?day=4&unit=c&lang=en-gb"
-    },
-    {
-      "Date": "2021-11-16T07:00:00+00:00",
-      "EpochDate": 1637046000,
-      "Sun": {
-        "Rise": "2021-11-16T07:36:00+00:00",
-        "EpochRise": 1637048160,
-        "Set": "2021-11-16T16:11:00+00:00",
-        "EpochSet": 1637079060
-      },
-      "Moon": {
-        "Rise": "2021-11-16T15:26:00+00:00",
-        "EpochRise": 1637076360,
-        "Set": "2021-11-17T05:15:00+00:00",
-        "EpochSet": 1637126100,
-        "Phase": "WaxingGibbous",
-        "Age": 12
-      },
-      "Temperature": {
-        "Minimum": {
-          "Value": 7.3,
-          "Unit": "C",
-          "UnitType": 17
-        },
-        "Maximum": {
-          "Value": 10.8,
-          "Unit": "C",
-          "UnitType": 17
-        }
-      },
-      "RealFeelTemperature": {
-        "Minimum": {
-          "Value": 6.2,
-          "Unit": "C",
-          "UnitType": 17
-        },
-        "Maximum": {
-          "Value": 10.7,
-          "Unit": "C",
-          "UnitType": 17
-        }
-      },
-      "RealFeelTemperatureShade": {
-        "Minimum": {
-          "Value": 6.2,
-          "Unit": "C",
-          "UnitType": 17
-        },
-        "Maximum": {
-          "Value": 10.7,
-          "Unit": "C",
-          "UnitType": 17
-        }
-      },
-      "HoursOfSun": 1.1,
-      "DegreeDaySummary": {
-        "Heating": {
-          "Value": 9,
-          "Unit": "C",
-          "UnitType": 17
-        },
-        "Cooling": {
-          "Value": 0,
-          "Unit": "C",
-          "UnitType": 17
-        }
-      },
-      "AirAndPollen": [
-        {
-          "Name": "AirQuality",
-          "Value": 0,
-          "Category": "Good",
-          "CategoryValue": 1,
-          "Type": "Ozone"
-        },
-        {
-          "Name": "Grass",
-          "Value": 0,
-          "Category": "Low",
-          "CategoryValue": 1
-        },
-        {
-          "Name": "Mold",
-          "Value": 0,
-          "Category": "Low",
-          "CategoryValue": 1
-        },
-        {
-          "Name": "Ragweed",
-          "Value": 0,
-          "Category": "Low",
-          "CategoryValue": 1
-        },
-        {
-          "Name": "Tree",
-          "Value": 0,
-          "Category": "Low",
-          "CategoryValue": 1
-        },
-        {
-          "Name": "UVIndex",
-          "Value": 0,
-          "Category": "Low",
-          "CategoryValue": 1
-        }
-      ],
-      "Day": {
-        "Icon": 7,
-        "IconPhrase": "Cloudy",
-        "HasPrecipitation": false,
-        "ShortPhrase": "Areas of low clouds and fog",
-        "LongPhrase": "Areas of low clouds and fog in the morning; overcast in the afternoon",
-        "PrecipitationProbability": 15,
-        "ThunderstormProbability": 0,
-        "RainProbability": 15,
-        "SnowProbability": 0,
-        "IceProbability": 0,
-        "Wind": {
-          "Speed": {
-            "Value": 5.6,
-            "Unit": "km/h",
-            "UnitType": 7
-          },
-          "Direction": {
-            "Degrees": 221,
-            "Localized": "SW",
-            "English": "SW"
-          }
-        },
-        "WindGust": {
-          "Speed": {
-            "Value": 11.1,
-            "Unit": "km/h",
-            "UnitType": 7
-          },
-          "Direction": {
-            "Degrees": 235,
-            "Localized": "SW",
-            "English": "SW"
-          }
-        },
-        "TotalLiquid": {
-          "Value": 0,
-          "Unit": "mm",
-          "UnitType": 3
-        },
-        "Rain": {
-          "Value": 0,
-          "Unit": "mm",
-          "UnitType": 3
-        },
-        "Snow": {
-          "Value": 0,
-          "Unit": "cm",
-          "UnitType": 4
-        },
-        "Ice": {
-          "Value": 0,
-          "Unit": "mm",
-          "UnitType": 3
-        },
-        "HoursOfPrecipitation": 0,
-        "HoursOfRain": 0,
-        "HoursOfSnow": 0,
-        "HoursOfIce": 0,
-        "CloudCover": 94,
-        "Evapotranspiration": {
-          "Value": 0,
-          "Unit": "mm",
-          "UnitType": 3
-        },
-        "SolarIrradiance": {
-          "Value": 0.9,
-          "Unit": "W/m²",
-          "UnitType": 33
-        }
-      },
-      "Night": {
-        "Icon": 12,
-        "IconPhrase": "Showers",
-        "HasPrecipitation": true,
-        "PrecipitationType": "Rain",
-        "PrecipitationIntensity": "Light",
-        "ShortPhrase": "Cloudy, a little rain late",
-        "LongPhrase": "Low clouds with a little rain late",
-        "PrecipitationProbability": 62,
-        "ThunderstormProbability": 0,
-        "RainProbability": 62,
-        "SnowProbability": 0,
-        "IceProbability": 0,
-        "Wind": {
-          "Speed": {
-            "Value": 7.4,
-            "Unit": "km/h",
-            "UnitType": 7
-          },
-          "Direction": {
-            "Degrees": 211,
-            "Localized": "SSW",
-            "English": "SSW"
-          }
-        },
-        "WindGust": {
-          "Speed": {
-            "Value": 14.8,
-            "Unit": "km/h",
-            "UnitType": 7
-          },
-          "Direction": {
-            "Degrees": 236,
-            "Localized": "SW",
-            "English": "SW"
-          }
-        },
-        "TotalLiquid": {
-          "Value": 2.2,
-          "Unit": "mm",
-          "UnitType": 3
-        },
-        "Rain": {
-          "Value": 2.2,
-          "Unit": "mm",
-          "UnitType": 3
-        },
-        "Snow": {
-          "Value": 0,
-          "Unit": "cm",
-          "UnitType": 4
-        },
-        "Ice": {
-          "Value": 0,
-          "Unit": "mm",
-          "UnitType": 3
-        },
-        "HoursOfPrecipitation": 1,
-        "HoursOfRain": 1,
-        "HoursOfSnow": 0,
-        "HoursOfIce": 0,
-        "CloudCover": 99,
-        "Evapotranspiration": {
-          "Value": 0,
-          "Unit": "mm",
-          "UnitType": 3
-        },
-        "SolarIrradiance": {
-          "Value": 0,
-          "Unit": "W/m²",
-          "UnitType": 33
-        }
-      },
-      "Sources": [
-        "AccuWeather"
-      ],
-      "MobileLink": "http://www.accuweather.com/en/gb/manchester/m15-6/daily-weather-forecast/329260?day=5&unit=c&lang=en-gb",
-      "Link": "http://www.accuweather.com/en/gb/manchester/m15-6/daily-weather-forecast/329260?day=5&unit=c&lang=en-gb"
-    }
-  ]
-};
+  }
+}

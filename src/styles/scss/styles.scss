@@ -19,31 +19,34 @@
         background-image: url("../../assets/images/clear.webp");
     }
     &.clear-night {
-        background-image: url("../../assets/images/clear-night.jpg");
+        background-image: url("../../assets/images/clear-night.webp");
     }
     &.cloudy {
         background-image: url("../../assets/images/cloudy.webp");
     }
     &.rainy {
-        background-image: url("../../assets/images/rainy.jpg");
+        background-image: url("../../assets/images/rainy.webp");
     }
     &.rainy-night {
-        background-image: url("../../assets/images/rainy-night.jpg");
+        background-image: url("../../assets/images/rainy-night.webp");
     }
     &.lightning {
-        background-image: url("../../assets/images/lightning.jpg");
+        background-image: url("../../assets/images/lightning.webp");
     }
     &.lightning-night {
-        background-image: url("../../assets/images/lightning-night.jpg");
+        background-image: url("../../assets/images/lightning-night.webp");
     }
     &.snowy {
-        background-image: url("../../assets/images/snowy.jpg");
+        background-image: url("../../assets/images/snowy.webp");
     }
     &.snowy-night {
-        background-image: url("../../assets/images/snowy-night.jpg");
+        background-image: url("../../assets/images/snowy-night.webp");
     }
-    &.icy {
-        background-image: url("../../assets/images/icy.jpg");
+    &.foggy {
+        background-image: url("../../assets/images/foggy.webp");
+    }
+    &.foggy-night {
+        background-image: url("../../assets/images/foggy-night.webp");
     }
 }
 
@@ -84,6 +87,7 @@ li {
     min-width: 300px;
     width: 35vw;
     margin-top: -4rem;
+    margin-bottom: 5rem;
     &.forecast {
         @include media-xl {
             min-width: 200px;
@@ -105,19 +109,35 @@ li {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    @include media-xl {
-        flex-direction: column;
-    }
+    flex-direction: row;
+    // @include media-sm {
+    //     flex-direction: column;
+    // }
+}
+
+.weather-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 50%;
 }
 
 .weather-icon {
+    display: flex;
+    justify-content: center;
+    width: 50%;
     img {
-        height: 100%;
-        width: 100%;
-        transform: scale(1.25);
-    }
-    @include media-xl {
-        margin-bottom: 1.5rem;
+        height: 60%;
+        width: 60%;
+        @include media-md {
+            width: 45%;
+            height: 45%;
+        }
+        @include media-lg {
+            width: 35%;
+            height: 35%;
+        }
     }
 }
 

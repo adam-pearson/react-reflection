@@ -14,6 +14,12 @@ import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
+const capitalise = (str) => {
+  return str.split(' ')
+   .map(w => w[0].toUpperCase() + w.substr(1).toLowerCase())
+   .join(' ')
+};
+
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
@@ -34,15 +40,22 @@ export default function CurrentCard({weather, location}) {
   }
   
   const rows = [
-    createData('Precipitation', weather.precipitation.precipitation ? weather.precipitation.precipitationType : "N/A"),
-    createData('Wind Speed', weather.weatherText ? `${weather.wind.speed} km/h` : ""),
-    createData('Wind Direction', weather.weatherText ? `${weather.wind.direction}° ${weather.wind.english}` : ""),
-    createData('Humidity', weather.weatherText ? `${weather.relativeHumidity}%`: ""),
-    createData('UV', weather.weatherText ? `${weather.uvIndex.index} (${weather.uvIndex.indexText})` : ""),
+    createData('Precipitation', weather ? `${weather.daily[0].pop * 100}%` : "N/A"),
+    createData('Wind Speed', weather ? `${weather.current.wind_speed} km/h` : "N/A"),
+    createData('Wind Direction', weather ? `${weather.current.wind_deg}°` : "N/A"),
+    createData('Humidity', weather ? `${weather.current.humidity}%`: "N/A"),
+    createData('UV Index', weather ? `${weather.current.uvi}` : "N/A"),
   ];
 
+  let time = "";
 
-  const time = weather.weatherText ? weather.recordedTime.substring(11, 16) : "00:00";
+  if (weather) {
+    let dateString = new Date(weather.current.dt * 1000);
+    let utcString = dateString.toUTCString();
+    time = utcString.slice(-12, -4);
+  } else {
+    time = "";
+  }
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -52,20 +65,20 @@ export default function CurrentCard({weather, location}) {
     <div className="card-container">
         <Card className="current-card">
         <CardHeader
-            title={weather.weatherText ? `The weather in ${location.EnglishName} is ${weather.weatherText.toLowerCase()}.` : "Place Name"}
+            title={weather ? capitalise(weather.current.weather[0].description) : " "}
             subheader={time}
         />
         <CardContent>
             <div className="weather-icon-container">
               <div className="weather-icon">
-                {weather.weatherText ? <img src={weather.weatherIconFile} alt={`Icon showing the weather as ${weather.weatherText}`}></img> : ""}
+                {weather ? <img src={`/icons/${weather.current.weather[0].icon}.svg`} alt={`Icon showing the weather as ${capitalise(weather.current.weather[0].description)}`}></img> : ""}
               </div>
               <div className="weather-info">
                 <Typography variant="h3" color="text.primary">
-                    {weather.weatherText ? `${weather.temperature.temp}°C` : "Awaiting Data"}
+                    {weather ? `${weather.current.temp}°C` : "Awaiting Data"}
                 </Typography>
                 <Typography variant="subtitle1" component="p" color="text.primary">
-                        {weather.weatherText ? `RealFeel® ${weather.temperature.realFeelTemp}°C` : ""}
+                        {weather ? `Feels like ${weather.current.feels_like}°C` : ""}
                 </Typography>
               </div>
             </div>

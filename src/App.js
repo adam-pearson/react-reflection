@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, createContext } from 'react';
 import './styles/css/styles.css';
-import {searchByIp, searchStringManchester, currentConditions, fiveDayForecastDummy} from './ExampleReturn';
+import * as Example from './ExampleReturn';
 import Config from './config';
 import axios from 'axios';
 import AppMenu from './components/AppMenu';
@@ -18,45 +18,13 @@ theme = responsiveFontSizes(theme);
 export const SearchContext = createContext();
 export const SearchBoxContext = createContext();
 
-// Toggle this to use dummy data
-const useDummyData = false;
-
-
 let apiKey = Config.OPENWEATHERMAP_API_KEY;
 
 
 function App() {
 
-  const [userLocFromIp, setUserLocFromIp] = useState();
-  const [displayLocation, setDisplayLocation] = useState();
-  const [currentWeather, setCurrentWeather] = useState({
-    recordedTime: "",
-      isDayTime: false,
-      temperature: {
-          temp: null,
-          realFeelTemp: null
-      },
-      wind: {
-          direction: null,
-          english: "",
-          speed: null
-      },
-      precipitation: {
-        precipitation: false,
-        precipitationType: ""
-      },
-      uvIndex: {
-        index: null,
-        indexText: ""
-      },
-      relativeHumidity: null,
-      weatherIcon: null,
-      weatherIconFile: "",
-      weatherText: ""
-  });
-  const [fiveDayForecast, setFiveDayForecast] = useState();
   const [searchResults, setSearchResults] = useState();
-  const [forecastPage, setForecastPage] = useState();
+
   // State and modifier for search box (passed through context)
   const [searchValue, setSearchValue] = useState("");
 
@@ -64,31 +32,15 @@ function App() {
   // Set search results state on search submit
   const searchSubmitHandler = (e) => {
     e.preventDefault();
-    if (!useDummyData) {
-      axios.get(`https://dataservice.accuweather.com/locations/v1/cities/search?apikey=${apiKey}&q=${searchValue}&language=en-GB&details=true`)
-      .then((response) => {
-        setSearchResults(response.data);
-        handleSearchOpen();
-        console.log(response.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    } else if (useDummyData) {
-    const dummySearchPromise = new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve(console.log("FETCHING DUMMY SEARCH DATA"));
-      }, 300);
-    });
-    dummySearchPromise
+    axios.get(`https://dataservice.accuweather.com/locations/v1/cities/search?apikey=${apiKey}&q=${searchValue}&language=en-GB&details=true`)
     .then((response) => {
+      setSearchResults(response.data);
       handleSearchOpen();
-      setSearchResults(searchStringManchester);
+      console.log(response.data);
     })
     .catch((err) => {
       console.log(err);
     });
-  }
 };
 
   const [searchOpen, setSearchOpen] = useState(false);
@@ -108,235 +60,209 @@ function App() {
    *  If TRUE, sets the user location from IP state to this location
    *  If FALSE, pulls the user's IP and finds their location from accuweather
    */
-  const pullLocationFromIp = useCallback(() => {
-    if (localStorage.getItem('IPLocation')) {
-      console.log("Using location from local storage");
-      const userLocationFromLocalStorage = JSON.parse(localStorage.getItem('IPLocation'));
-      setUserLocFromIp(userLocationFromLocalStorage);
-    } else {
-      console.log("No location found in local storage");
-      axios.get("https://geolocation-db.com/json/de711330-3dff-11ec-a9a6-8f668cb904bf")
-      .then((response) => {
-        console.log("IPv4: ", response.data.IPv4);
-        return response.data.IPv4;
-      })
-      .catch ((err) => {
-        let css = "font-weight: bold; font-size: 1rem";
-        console.error("%c\nError fetching IP address for weather location.", css, "\nWe only use your IP address to find your local weather, and we serve no ads, so please consider disabling adblock for the best experience.", "\nDefaulting to Ashburn, Virginia");
-        setUserLocFromIp(searchByIp);
-        localStorage.setItem('IPLocation', JSON.stringify(searchByIp));
-      })
-      .then((response) => {
-        axios.get(`https://dataservice.accuweather.com/locations/v1/cities/ipaddress?apikey=${apiKey}&q=${response}&language=en-GB`)
-        .then((response) => {
-          console.log("Response", response);
-          setUserLocFromIp(response.data);
-          localStorage.setItem('IPLocation', JSON.stringify(response.data));
-        })
-        .catch ((err) => {
-          console.log(err);
-        })
-      })
-    }
-  }, []);
+  // const pullLocationFromIp = useCallback(() => {
+  //   if (localStorage.getItem('IPLocation')) {
+  //     console.log("Using location from local storage");
+  //     const userLocationFromLocalStorage = JSON.parse(localStorage.getItem('IPLocation'));
+  //     setUserLocFromIp(userLocationFromLocalStorage);
+  //   } else {
+  //     console.log("No location found in local storage");
+  //     axios.get("https://geolocation-db.com/json/de711330-3dff-11ec-a9a6-8f668cb904bf")
+  //     .then((response) => {
+  //       console.log("IPv4: ", response.data.IPv4);
+  //       return response.data.IPv4;
+  //     })
+  //     .catch ((err) => {
+  //       let css = "font-weight: bold; font-size: 1rem";
+  //       console.error("%c\nError fetching IP address for weather location.", css, "\nWe only use your IP address to find your local weather, and we serve no ads, so please consider disabling adblock for the best experience.", "\nDefaulting to Ashburn, Virginia");
+  //       setUserLocFromIp(searchByIp);
+  //       localStorage.setItem('IPLocation', JSON.stringify(searchByIp));
+  //     })
+  //     .then((response) => {
+  //       axios.get(`https://dataservice.accuweather.com/locations/v1/cities/ipaddress?apikey=${apiKey}&q=${response}&language=en-GB`)
+  //       .then((response) => {
+  //         console.log("Response", response);
+  //         setUserLocFromIp(response.data);
+  //         localStorage.setItem('IPLocation', JSON.stringify(response.data));
+  //       })
+  //       .catch ((err) => {
+  //         console.log(err);
+  //       })
+  //     })
+  //   }
+  // }, []);
 
 
 
 
-  const pullCurrentWeatherAtLocation = useCallback((locationKey) => {
-    if (!useDummyData) {
-      axios.get(`https://dataservice.accuweather.com/currentconditions/v1/${locationKey}?apikey=${apiKey}&language=en-GB&details=true`)
-      .then ((response) => {
-          setCurrentWeather({
-            recordedTime: response.data[0].LocalObservationDateTime,
-            isDayTime:response.data[0].IsDayTime,
-            temperature: {
-                temp: response.data[0].Temperature.Metric.Value,
-                realFeelTemp: response.data[0].RealFeelTemperature.Metric.Value,
-            },
-            wind: {
-                direction: response.data[0].Wind.Direction.Degrees,
-                english: response.data[0].Wind.Direction.English,
-                speed: response.data[0].Wind.Speed.Metric.Value,
-            },
-            precipitation: {
-              precipitation: response.data[0].HasPrecipitation,
-              precipitationType: response.data[0].PrecipitationType,
-            },
-            uvIndex: {
-              index: response.data[0].UVIndex,
-              indexText: response.data[0].UVIndexText
-            },
-            relativeHumidity: response.data[0].RelativeHumidity,
-            weatherIcon: response.data[0].WeatherIcon,
-            weatherIconFile: `/icons/${response.data[0].WeatherIcon}.png`,
-            weatherText: response.data[0].WeatherText,
-        })
-        axios.get(`https://dataservice.accuweather.com/forecasts/v1/daily/5day/${locationKey}?apikey=${apiKey}&language=en-GB&details=true&metric=true`)
-        .then ((response) => {
-          let fiveDayPre = [];
-          for (let i = 0; i < response.data.DailyForecasts.length; i++) {
-            fiveDayPre.push(
-              {
-                date: response.data.DailyForecasts[i].Date,
-                sunrise: response.data.DailyForecasts[i].Sun.Rise,
-                sunset: response.data.DailyForecasts[i].Sun.Set,
-                tempMin: response.data.DailyForecasts[i].Temperature.Minimum.Value,
-                tempMax: response.data.DailyForecasts[i].Temperature.Maximum.Value,
-                weatherIcon: response.data.DailyForecasts[i].Day.Icon,
-                weatherIconFile: `/icons/${response.data.DailyForecasts[i].Day.Icon}.png`,
-                precipitation: {
-                  precpitation: response.data.DailyForecasts[i].Day.HasPrecipitation,
-                  precipitationType: response.data.DailyForecasts[i].Day.PrecipitationType,
-                },
-                weatherText: response.data.DailyForecasts[i].Day.LongPhrase,
-              }
-            )
-          }
-          setFiveDayForecast(fiveDayPre);
-          fiveDayPre = [];
-        })
-        .catch ((err) => {
-          console.log(err)
-        });
-      })
-      .catch ((err) => {
-        console.log(err)
-      });
-    } else if (useDummyData) {
-      const dummyPromise = new Promise((resolve, reject) => {
-        setTimeout(() => {
-          resolve(console.log("FETCHING DUMMY WEATHER DATA"));
-        }, 300);
-      });
-      dummyPromise
-      .then ((response) => {
-        setCurrentWeather({
-          recordedTime: currentConditions[0].LocalObservationDateTime,
-          isDayTime: currentConditions[0].IsDayTime,
-          temperature: {
-              temp: currentConditions[0].Temperature.Metric.Value,
-              realFeelTemp: currentConditions[0].RealFeelTemperature.Metric.Value,
-          },
-          wind: {
-              direction: currentConditions[0].Wind.Direction.Degrees,
-              english: currentConditions[0].Wind.Direction.English,
-              speed: currentConditions[0].Wind.Speed.Metric.Value,
-          },
-          precipitation: {
-            precipitation: currentConditions[0].HasPrecipitation,
-            precipitationType: currentConditions[0].PrecipitationType,
-          },
-          uvIndex: {
-            index: currentConditions[0].UVIndex,
-            indexText: currentConditions[0].UVIndexText
-          },
-          relativeHumidity: currentConditions[0].RelativeHumidity,
-          weatherIcon: currentConditions[0].WeatherIcon,
-          weatherIconFile: `/icons/${currentConditions[0].WeatherIcon}.png`,
-          weatherText: currentConditions[0].WeatherText,
-        });
-      })
-      .then ((response) => {
-        let fiveDayPre = [];
-        for (let i = 0; i < fiveDayForecastDummy.DailyForecasts.length; i++) {
-          fiveDayPre.push(
-            {
-              date: fiveDayForecastDummy.DailyForecasts[i].Date,
-              sunrise: fiveDayForecastDummy.DailyForecasts[i].Sun.Rise,
-              sunset: fiveDayForecastDummy.DailyForecasts[i].Sun.Set,
-              tempMin: fiveDayForecastDummy.DailyForecasts[i].Temperature.Minimum.Value,
-              tempMax: fiveDayForecastDummy.DailyForecasts[i].Temperature.Maximum.Value,
-              weatherIcon: fiveDayForecastDummy.DailyForecasts[i].Day.Icon,
-              weatherIconFile: `/icons/${fiveDayForecastDummy.DailyForecasts[i].Day.Icon}.png`,
-              precipitation: {
-                precpitation: fiveDayForecastDummy.DailyForecasts[i].Day.HasPrecipitation,
-                precipitationType: fiveDayForecastDummy.DailyForecasts[i].Day.PrecipitationType,
-              },
-              weatherText: fiveDayForecastDummy.DailyForecasts[i].Day.LongPhrase,
-            }
-          )
-        }
-        setFiveDayForecast(fiveDayPre);
-        fiveDayPre = [];
-      })
-      .catch ((err) => {
-        console.log(err)
-      });
-    }
-  }, []);
+  // const pullCurrentWeatherAtLocation = useCallback((locationKey) => {
+  //   axios.get(`https://dataservice.accuweather.com/currentconditions/v1/${locationKey}?apikey=${apiKey}&language=en-GB&details=true`)
+  //   .then ((response) => {
+  //       setCurrentWeather({
+  //         recordedTime: response.data[0].LocalObservationDateTime,
+  //         isDayTime:response.data[0].IsDayTime,
+  //         temperature: {
+  //             temp: response.data[0].Temperature.Metric.Value,
+  //             realFeelTemp: response.data[0].RealFeelTemperature.Metric.Value,
+  //         },
+  //         wind: {
+  //             direction: response.data[0].Wind.Direction.Degrees,
+  //             english: response.data[0].Wind.Direction.English,
+  //             speed: response.data[0].Wind.Speed.Metric.Value,
+  //         },
+  //         precipitation: {
+  //           precipitation: response.data[0].HasPrecipitation,
+  //           precipitationType: response.data[0].PrecipitationType,
+  //         },
+  //         uvIndex: {
+  //           index: response.data[0].UVIndex,
+  //           indexText: response.data[0].UVIndexText
+  //         },
+  //         relativeHumidity: response.data[0].RelativeHumidity,
+  //         weatherIcon: response.data[0].WeatherIcon,
+  //         weatherIconFile: `/icons/${response.data[0].WeatherIcon}.png`,
+  //         weatherText: response.data[0].WeatherText,
+  //     })
+  //     axios.get(`https://dataservice.accuweather.com/forecasts/v1/daily/5day/${locationKey}?apikey=${apiKey}&language=en-GB&details=true&metric=true`)
+  //     .then ((response) => {
+  //       let fiveDayPre = [];
+  //       for (let i = 0; i < response.data.DailyForecasts.length; i++) {
+  //         fiveDayPre.push(
+  //           {
+  //             date: response.data.DailyForecasts[i].Date,
+  //             sunrise: response.data.DailyForecasts[i].Sun.Rise,
+  //             sunset: response.data.DailyForecasts[i].Sun.Set,
+  //             tempMin: response.data.DailyForecasts[i].Temperature.Minimum.Value,
+  //             tempMax: response.data.DailyForecasts[i].Temperature.Maximum.Value,
+  //             weatherIcon: response.data.DailyForecasts[i].Day.Icon,
+  //             weatherIconFile: `/icons/${response.data.DailyForecasts[i].Day.Icon}.png`,
+  //             precipitation: {
+  //               precpitation: response.data.DailyForecasts[i].Day.HasPrecipitation,
+  //               precipitationType: response.data.DailyForecasts[i].Day.PrecipitationType,
+  //             },
+  //             weatherText: response.data.DailyForecasts[i].Day.LongPhrase,
+  //           }
+  //         )
+  //       }
+  //       setFiveDayForecast(fiveDayPre);
+  //       fiveDayPre = [];
+  //     })
+  //     .catch ((err) => {
+  //       console.log(err)
+  //     });
+  //   })
+  //   .catch ((err) => {
+  //     console.log(err)
+  //   });
+  // }, []);
 
 
   // pulling user location and set the display location on first render
-  useEffect(() => {
-    if (!userLocFromIp) {
-      pullLocationFromIp();
-    }
-    setDisplayLocation(userLocFromIp);
+  // useEffect(() => {
+  //   if (!userLocFromIp) {
+  //     pullLocationFromIp();
+  //   }
+  //   setDisplayLocation(userLocFromIp);
       
-  }, [userLocFromIp, pullLocationFromIp])
+  // }, [userLocFromIp, pullLocationFromIp])
 
 
   // pulling current weather at display location if set
+  // useEffect(() => {
+  //   if (displayLocation) {
+  //     pullCurrentWeatherAtLocation(displayLocation.Key);
+  //   }
+  // }, [displayLocation, pullCurrentWeatherAtLocation]);
+
+  const [weather, setWeather] = useState();
+  const [location, setLocation] = useState();
+
   useEffect(() => {
-    if (displayLocation) {
-      pullCurrentWeatherAtLocation(displayLocation.Key);
-    }
-  }, [displayLocation, pullCurrentWeatherAtLocation]);
+    getLocation();
+  }, []);
 
   const getLocation = () => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(showPosition);
+      navigator.geolocation.getCurrentPosition(setPosition, declinedPosition);
     } else {
       console.log("Geolocation is not supported on this device");
     }
   };
 
-  const showPosition = (position) => {
+  const declinedPosition = () => {
+    let lat = 53.4808;
+    let lon = -2.2426;
+    axios.get(`https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=10&appid=${apiKey}`)
+      .then (response => {
+        setLocation(response.data[0]);
+        console.log("Setting default location: ", response);
+
+        axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&exclude=minutely,hourly,alerts`)
+        .then (response => {
+          setWeather(response.data)
+          console.log("Response from one call request: ", response.data);
+        })
+        .catch (err => {
+          console.log("Error from one call request: ", err);
+        });
+
+      })
+      .catch (err => {
+        console.log("Error getting default location: ", err);
+      })
+  }
+
+  const setPosition = (position) => {
     console.log("Latitude: ", position.coords.latitude);
     console.log("Longitude: ", position.coords.longitude);
     let lat = position.coords.latitude;
     let lon = position.coords.longitude;
+
     axios.get(`https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=10&appid=${apiKey}`)
       .then (response => {
+        setLocation(response.data[0]);
         console.log("Location from co-ordinates: ", response);
+        
+        axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&exclude=minutely,hourly,alerts`)
+        .then (response => {
+          setWeather(response.data)
+          console.log("Response from one call request: ", response.data);
+        })
+        .catch (err => {
+          console.log("Error from one call request: ", err);
+        });
+
       })
       .catch (err => {
         console.log("Error getting location: ", err);
       })
-    axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`)
-      .then (response => {
-        console.log("Response from lat lon: ", response);
-      })
-      .catch (err => {
-        console.log("Error from lat lon: ", err);
-      });
+
   };
+
+
 
   return (
     <div>
       <SearchContext.Provider value={{searchValue, setSearchValue, searchSubmitHandler}}>
-        <SearchBoxContext.Provider value={{searchOpen, setDisplayLocation, setSearchOpen, handleSearchClose}}>
+        <SearchBoxContext.Provider value={{searchOpen, setLocation, setSearchOpen, handleSearchClose}}>
           <ThemeProvider theme={theme}>
             <Router>
               <AppMenu />
-              <WeatherHeader weather={currentWeather} location={displayLocation} searchResults={searchResults}/>
-
-              <Button variant="contained" onClick={() => getLocation()}>GPS Location</Button>
+              <WeatherHeader weather={weather} location={location} searchResults={searchResults}/>
 
               <Routes>
-                <Route path="/" exact element={<CurrentCard weather={currentWeather} location={displayLocation} searchResults={searchResults} />} />
-                <Route path="/forecast" exact element={<FiveDayCards forecast={fiveDayForecast} location={displayLocation} />} />
+                <Route path="/" exact element={<CurrentCard weather={weather} location={location} searchResults={searchResults} />} />
+                {/* <Route path="/forecast" exact element={<FiveDayCards forecast={weather} location={displayLocation} />} /> */}
               </Routes>
 
-              <div className="forecast-btn-container">
+              {/* <div className="forecast-btn-container">
                 <Button variant="contained" className="forecast-btn" component={Link} to={forecastPage ? "/" : "/forecast"} onClick={e => setForecastPage(!forecastPage)}>
                   {forecastPage 
                   ? "Current Weather"
                   : "Five Day Forecast"
                   }
                 </Button>
-              </div>
+              </div> */}
               </Router>
           </ThemeProvider>
         </SearchBoxContext.Provider>
