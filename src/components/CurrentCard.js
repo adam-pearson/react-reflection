@@ -13,6 +13,8 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Skeleton from '@mui/material/Skeleton';
+
 
 const capitalise = (str) => {
   return str.split(' ')
@@ -40,7 +42,7 @@ export default function CurrentCard({weather, location}) {
   }
   
   const rows = [
-    createData('Precipitation', weather ? `${weather.daily[0].pop * 100}%` : "N/A"),
+    createData('Precipitation', weather ? `${(weather.daily[0].pop * 100).toPrecision(2)}%` : "N/A"),
     createData('Wind Speed', weather ? `${weather.current.wind_speed} km/h` : "N/A"),
     createData('Wind Direction', weather ? `${weather.current.wind_deg}°` : "N/A"),
     createData('Humidity', weather ? `${weather.current.humidity}%`: "N/A"),
@@ -65,17 +67,17 @@ export default function CurrentCard({weather, location}) {
     <div className="card-container">
         <Card className="current-card">
         <CardHeader
-            title={weather ? capitalise(weather.current.weather[0].description) : " "}
-            subheader={time}
+            title={weather ? capitalise(weather.current.weather[0].description) : <Skeleton variant="text" height={38} />}
+            subheader={weather ? `${time} (UTC)` : <Skeleton variant="text" width={`50%`} height={32} />}
         />
         <CardContent>
             <div className="weather-icon-container">
               <div className="weather-icon">
-                {weather ? <img src={`/icons/${weather.current.weather[0].icon}.svg`} alt={`Icon showing the weather as ${capitalise(weather.current.weather[0].description)}`}></img> : ""}
+                {weather ? <img src={`/icons/${weather.current.weather[0].icon}.svg`} alt={`Icon showing the weather as ${capitalise(weather.current.weather[0].description)}`}></img> : <Skeleton variant="circular" width={100} height={100} />}
               </div>
               <div className="weather-info">
                 <Typography variant="h3" color="text.primary">
-                    {weather ? `${weather.current.temp}°C` : "Awaiting Data"}
+                    {weather ? `${weather.current.temp}°C` : <Skeleton variant="text" height={100} />}
                 </Typography>
                 <Typography variant="subtitle1" component="p" color="text.primary">
                         {weather ? `Feels like ${weather.current.feels_like}°C` : ""}
@@ -84,7 +86,7 @@ export default function CurrentCard({weather, location}) {
             </div>
 
         </CardContent>
-        <CardActions disableSpacing sx={{display: "flex", justifyContent: 'flex-end'}}>
+        <CardActions disableSpacing sx={{display: "flex", justifyContent: 'flex-end'}}>   
         <ExpandMore
           expand={expanded}
           onClick={handleExpandClick}
@@ -94,27 +96,29 @@ export default function CurrentCard({weather, location}) {
           <ExpandMoreIcon />
         </ExpandMore>
         </CardActions>
+        {weather &&
         <Collapse in={expanded} timeout="auto" unmountOnExit>
             <CardContent>
             <TableContainer>
-        <Table className="current-more" aria-label="simple table">
-            <TableBody>
-            {rows.map((row) => (
-                <TableRow
-                key={row.name}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-                <TableCell component="th" scope="row">
-                    {row.name}
-                </TableCell>
-                <TableCell align="right">{row.value}</TableCell>
-                </TableRow>
-            ))}
-            </TableBody>
-        </Table>
-        </TableContainer>
+              <Table className="current-more" aria-label="simple table">
+                <TableBody>
+                {rows.map((row) => (
+                    <TableRow
+                    key={row.name}
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                    >
+                    <TableCell component="th" scope="row">
+                        {row.name}
+                    </TableCell>
+                    <TableCell align="right">{row.value}</TableCell>
+                    </TableRow>
+                ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
             </CardContent>
         </Collapse>
+        }
         </Card>
     </div>
   );

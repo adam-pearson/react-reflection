@@ -48,6 +48,9 @@
     &.foggy-night {
         background-image: url("../../assets/images/foggy-night.webp");
     }
+    @media (orientation: landscape) {
+        height: 35vh;
+    }
 }
 
 li {
@@ -55,7 +58,7 @@ li {
 }
 
 .place-name {
-    text-shadow: 5px 5px 15px rgba(0,0,0,0.75);
+    text-shadow: 2px 2px 5px rgba(0,0,0,1);
     padding-bottom: 1.5rem;
     color: white;
 }
@@ -64,38 +67,47 @@ li {
     display: flex;
     justify-content: center;
     align-items: center;
-    max-height: inherit;
-    margin-top: -1rem;
     &.forecast {
-    &:not(:first-child) {
-        margin-top: 3rem;
-        @include media-xl {
-            margin-top: 0;
+        &:not(:first-child) {
+            margin-top: 3rem;
+            @include media-sm {
+                margin-top: 0rem;
+            }
+            @include media-lg {
+                margin-top: 0;
+            }
         }
-    }
-        @include media-xl {
-            margin-top: 0;
-            align-items: stretch;
-            margin-left: 1rem;
-            margin-right: 1rem;
-        }
-
+            @include media-lg {
+                margin-top: 0;
+                align-items: stretch;
+                margin-left: .75rem;
+                margin-right: .75rem;
+            }
     }
 }
+
+.forecast-temp {
+    font-size: 1rem;
+    .minmax {
+        font-weight: bold;
+    }
+}
+
 
 .current-card {
     min-width: 300px;
     width: 35vw;
-    margin-top: -4rem;
-    margin-bottom: 5rem;
+    margin-top: -3rem;
+    margin-bottom: 1.5rem;
+    @media (orientation: landscape) {
+        margin-top: 1rem;
+    }
     &.forecast {
         @include media-xl {
             min-width: 200px;
-            width: 200px;
+            width: 250px;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            max-height: 350px;
         }
     }
 }
@@ -110,15 +122,11 @@ li {
     justify-content: space-around;
     align-items: center;
     flex-direction: row;
-    // @include media-sm {
-    //     flex-direction: column;
-    // }
 }
 
 .weather-info {
     display: flex;
     justify-content: center;
-    align-items: center;
     flex-direction: column;
     width: 50%;
 }
@@ -126,17 +134,18 @@ li {
 .weather-icon {
     display: flex;
     justify-content: center;
-    width: 50%;
+    width: 40%;
     img {
         height: 60%;
         width: 60%;
+        filter: invert(36%) sepia(21%) saturate(4539%) hue-rotate(188deg) brightness(96%) contrast(92%);
         @include media-md {
             width: 45%;
             height: 45%;
         }
         @include media-lg {
-            width: 35%;
-            height: 35%;
+            width: 55%;
+            height: 55%;
         }
     }
 }
@@ -144,7 +153,9 @@ li {
 .forecast-btn-container {
     display: flex;
     justify-content: center;
-    padding: 1rem;
+    @include media-xs-max {
+        margin-bottom: 2rem;
+    }
 }
 
 .forecast-btn {
@@ -152,15 +163,27 @@ li {
     color: white;
 }
 
-.forecast-cards-container {
+.forecast-cards-container, .scroll-container {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-start;
     flex-wrap: wrap;
     flex-direction: column;
-    @include media-xl {
+    padding-left: 24px;
+    padding-right: 24px;
+    margin-bottom: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    cursor: grab;
+    @include media-lg {
+        overflow-x: auto;
         flex-direction: row;
         flex-wrap: nowrap;
         align-items: stretch;
+        margin-bottom: 5rem;
     }
+}
+
+.search-results {
+    min-width: 275px;
 }

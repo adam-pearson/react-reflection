@@ -7,6 +7,7 @@ import DialogContent from '@mui/material/DialogContent';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import {SearchBoxContext} from '../App';
+import {CountryCodes} from '../CountryCodes';
 
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -57,10 +58,10 @@ BootstrapDialogTitle.propTypes = {
   const SearchResults = ({searchResults}) => {
   const searchBoxContext = useContext(SearchBoxContext)
 
-  const {searchOpen, setDisplayLocation, setSearchOpen, handleSearchClose} = searchBoxContext;
+  const {searchOpen, setLocation, setSearchOpen, handleSearchClose} = searchBoxContext;
 
   const searchClickHandler = (item) => {
-    setDisplayLocation(item);
+    setLocation(item);
     console.log("Search item clicked: ", item);
     setSearchOpen(false);
   }
@@ -72,27 +73,29 @@ BootstrapDialogTitle.propTypes = {
         aria-labelledby="search-results"
         open={searchOpen}
       >
-        <BootstrapDialogTitle id="search-results" onClose={handleSearchClose}>
+        <BootstrapDialogTitle className="search-results" id="search-results" onClose={handleSearchClose}>
           Search Results
         </BootstrapDialogTitle>
         <DialogContent dividers>
+          {searchResults &&
             <List>
-                {searchResults &&
+                {searchResults.length > 0 ?
                     searchResults.map((item, index) => {
                         return (
                             <ListItem disablePadding key={index}>
                                 <ListItemButton onClick={e => searchClickHandler(item)}>
-                                    <ListItemText primary={`${item.LocalizedName}, ${item.AdministrativeArea.LocalizedName === item.LocalizedName 
-                                        ? `${item.Country.LocalizedName}`
-                                        : `${item.AdministrativeArea.LocalizedName}, ${item.Country.LocalizedName}`}`}>
-                                        
-                                    </ListItemText>
+                                    <ListItemText primary={`${item.name}, ${item.state ? `${item.state},` : ""} ${item.country ? `${CountryCodes.filter(country => country.alpha2 === item.country.toLowerCase())[0].name}` : ""}`} />
                                 </ListItemButton>
                             </ListItem>
                         )
                     })
-                }
+              : 
+                <ListItem disablePadding>
+                  <ListItemText primary={"No locations found with that search term"} />
+                </ListItem>
+              }
             </List>
+         }
         </DialogContent>
       </BootstrapDialog>
     </div>
