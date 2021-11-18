@@ -12,7 +12,7 @@
     flex-direction: column;
     background-color: grey;
     width: 100%;
-    height: 45vh;
+    height: 55vh;
     background-size: cover;
     background-position: 50% 50%;
     &.clear {
@@ -49,7 +49,7 @@
         background-image: url("../../assets/images/foggy-night.webp");
     }
     @media (orientation: landscape) {
-        height: 35vh;
+        height: 55vh;
     }
 }
 
@@ -67,18 +67,18 @@ li {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: -2rem;
     &.forecast {
         &:not(:first-child) {
             margin-top: 3rem;
             @include media-sm {
-                margin-top: 0rem;
             }
             @include media-lg {
-                margin-top: 0;
             }
         }
+        max-width: 350px;
+        margin-top: 3rem;
             @include media-lg {
-                margin-top: 0;
                 align-items: stretch;
                 margin-left: .75rem;
                 margin-right: .75rem;
@@ -99,10 +99,11 @@ li {
     width: 35vw;
     margin-top: -3rem;
     margin-bottom: 1.5rem;
-    @media (orientation: landscape) {
-        margin-top: 1rem;
-    }
+    // @media (orientation: landscape) {
+    //     margin-top: 1rem;
+    // }
     &.forecast {
+        margin-top: 0;
         @include media-xl {
             min-width: 200px;
             width: 250px;
@@ -153,9 +154,8 @@ li {
 .forecast-btn-container {
     display: flex;
     justify-content: center;
-    @include media-xs-max {
-        margin-bottom: 2rem;
-    }
+    margin-bottom: 3rem;
+
 }
 
 .forecast-btn {
@@ -168,19 +168,19 @@ li {
     justify-content: flex-start;
     flex-wrap: wrap;
     flex-direction: column;
-    padding-left: 24px;
-    padding-right: 24px;
     margin-bottom: 1rem;
     margin-left: auto;
     margin-right: auto;
     position: relative;
     cursor: grab;
+    margin-top: -4rem;
     @include media-lg {
-        overflow-x: auto;
         flex-direction: row;
         flex-wrap: nowrap;
         align-items: stretch;
         margin-bottom: 5rem;
+        padding-left: 24px;
+        padding-right: 24px;
     }
 }
 

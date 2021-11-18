@@ -58,7 +58,7 @@ const WeatherHeader = ({weather, location, searchResults, forecastPage, setForec
                 <Button variant="contained" className="forecast-btn" component={Link} to={forecastPage ? "/" : "/forecast"} onClick={e => setForecastPage(!forecastPage)}>
                   {forecastPage 
                   ? "Current Weather"
-                  : "Five Day Forecast"
+                  : "Seven Day Forecast"
                   }
                 </Button>
               </div>

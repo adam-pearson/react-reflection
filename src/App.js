@@ -39,7 +39,7 @@ function App() {
     .then((response) => {
       setSearchResults(response.data);
       handleSearchOpen();
-      console.log(response.data);
+      // console.log(response.data);
     })
     .catch((err) => {
       setSearchResults({error: true, errorMessage: err, message: "No results found for that search term"});
@@ -60,7 +60,7 @@ function App() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(setPosition, declinedPosition);
     } else {
-      console.log("Geolocation is not supported on this device");
+      console.error("Geolocation is not supported on this device");
     }
   }, []);
 
@@ -70,10 +70,10 @@ function App() {
     axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&exclude=minutely,alerts`)
     .then (response => {
       setWeather(response.data)
-      console.log("Response from one call request: ", response.data);
+      // console.log("Response from one call request: ", response.data);
     })
     .catch (err => {
-      console.log("Error from one call request: ", err);
+      // console.log("Error from one call request: ", err);
     });
   };
 
@@ -81,7 +81,7 @@ function App() {
   useEffect(() => {
     if (location) {
       getWeatherAtLocation(location.lat, location.lon);
-      console.log(location.lat, location.lon)
+      // console.log(location.lat, location.lon)
     }
   }, [location]);
 
@@ -95,7 +95,7 @@ function App() {
     axios.get(`https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=10&appid=${apiKey}`)
       .then (response => {
         setLocation(response.data[0]);
-        console.log("Setting default location: ", response);
+        // console.log("Setting default location: ", response);
         getWeatherAtLocation(lat, lon);
       })
       .catch (err => {
@@ -105,18 +105,18 @@ function App() {
 
   // Function to set the user's location through their device's geolocation
   const setPosition = (position) => {
-    console.log("Latitude: ", position.coords.latitude);
-    console.log("Longitude: ", position.coords.longitude);
+    // console.log("Latitude: ", position.coords.latitude);
+    // console.log("Longitude: ", position.coords.longitude);
     let lat = position.coords.latitude;
     let lon = position.coords.longitude;
 
     axios.get(`https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=10&appid=${apiKey}`)
       .then (response => {
         setLocation(response.data[0]);
-        console.log("Location from co-ordinates: ", response);
+        // console.log("Location from co-ordinates: ", response);
       })
       .catch (err => {
-        console.log("Error getting location: ", err);
+        // console.log("Error getting location: ", err);
       })
   };
 
@@ -130,18 +130,11 @@ function App() {
               <WeatherHeader weather={weather} location={location} searchResults={searchResults} forecastPage={forecastPage} setForecastPage={setForecastPage}/>
 
               <Routes>
-                <Route path="/" exact element={<CurrentCard weather={weather} location={location} searchResults={searchResults} />} />
-                <Route path="/forecast" exact element={<FiveDayCards forecast={weather && weather.daily} location={location} />} />
+                <Route path="/" exact element={<CurrentCard weather={weather} location={location} searchResults={searchResults}/>} />
+                <Route path="/forecast" exact element={<FiveDayCards forecast={weather && weather.daily} location={location}/>} />
+                <Route element={<CurrentCard weather={weather} location={location} searchResults={searchResults}/>} />
               </Routes>
 
-              {/* <div className="forecast-btn-container">
-                <Button variant="contained" className="forecast-btn" component={Link} to={forecastPage ? "/" : "/forecast"} onClick={e => setForecastPage(!forecastPage)}>
-                  {forecastPage 
-                  ? "Current Weather"
-                  : "Five Day Forecast"
-                  }
-                </Button>
-              </div> */}
               </Router>
           </ThemeProvider>
         </SearchBoxContext.Provider>

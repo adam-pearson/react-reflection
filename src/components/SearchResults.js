@@ -62,7 +62,7 @@ BootstrapDialogTitle.propTypes = {
 
   const searchClickHandler = (item) => {
     setLocation(item);
-    console.log("Search item clicked: ", item);
+    // console.log("Search item clicked: ", item);
     setSearchOpen(false);
   }
 

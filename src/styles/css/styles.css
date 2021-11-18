@@ -12,7 +12,7 @@
   flex-direction: column;
   background-color: grey;
   width: 100%;
-  height: 45vh;
+  height: 55vh;
   background-size: cover;
   background-position: 50% 50%;
 }
@@ -51,7 +51,7 @@
 }
 @media (orientation: landscape) {
   .background-image {
-    height: 35vh;
+    height: 55vh;
   }
 }
 
@@ -69,23 +69,17 @@ li {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: -2rem;
+}
+.card-container.forecast {
+  max-width: 350px;
+  margin-top: 3rem;
 }
 .card-container.forecast:not(:first-child) {
   margin-top: 3rem;
 }
-@media (min-width: 600px) {
-  .card-container.forecast:not(:first-child) {
-    margin-top: 0rem;
-  }
-}
-@media (min-width: 992px) {
-  .card-container.forecast:not(:first-child) {
-    margin-top: 0;
-  }
-}
 @media (min-width: 992px) {
   .card-container.forecast {
-    margin-top: 0;
     align-items: stretch;
     margin-left: 0.75rem;
     margin-right: 0.75rem;
@@ -105,10 +99,8 @@ li {
   margin-top: -3rem;
   margin-bottom: 1.5rem;
 }
-@media (orientation: landscape) {
-  .current-card {
-    margin-top: 1rem;
-  }
+.current-card.forecast {
+  margin-top: 0;
 }
 @media (min-width: 1200px) {
   .current-card.forecast {
@@ -164,11 +156,7 @@ li {
 .forecast-btn-container {
   display: flex;
   justify-content: center;
-}
-@media (max-width: 523px) {
-  .forecast-btn-container {
-    margin-bottom: 2rem;
-  }
+  margin-bottom: 3rem;
 }
 
 .forecast-btn {
@@ -181,21 +169,21 @@ li {
   justify-content: flex-start;
   flex-wrap: wrap;
   flex-direction: column;
-  padding-left: 24px;
-  padding-right: 24px;
   margin-bottom: 1rem;
   margin-left: auto;
   margin-right: auto;
   position: relative;
   cursor: grab;
+  margin-top: -4rem;
 }
 @media (min-width: 992px) {
   .forecast-cards-container, .scroll-container {
-    overflow-x: auto;
     flex-direction: row;
     flex-wrap: nowrap;
     align-items: stretch;
     margin-bottom: 5rem;
+    padding-left: 24px;
+    padding-right: 24px;
   }
 }
 

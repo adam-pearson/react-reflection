@@ -7,7 +7,7 @@ const Search = () => {
 
     const searchContext = useContext(SearchContext);
 
-    console.log("searchContext: ", searchContext);
+    // console.log("searchContext: ", searchContext);
 
     return (
         <Box
