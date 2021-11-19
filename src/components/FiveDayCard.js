@@ -47,7 +47,7 @@ const capitalise = (str) => {
             <Card className="forecast current-card">
             <CardHeader
                 subheader={forecast ? `${capitalise(forecast[day].weather[0].description)}.` : <Skeleton variant="text" height={32} />}
-                title={forecast ? day === 0 ? `Today (${dayOfWeek})` : day === 1 ? `Tomorrow (${dayOfWeek})` : day === 7 ? `Next ${dayOfWeek}` : dayOfWeek : <Skeleton variant="text" height={32} />}
+                title={forecast ? day === 0 ? `Today` : day === 1 ? `Tomorrow` : day === 7 ? `Next ${dayOfWeek}` : dayOfWeek : <Skeleton variant="text" height={32} />}
             />
 
             <CardContent className="forecast-content">

@@ -9,7 +9,6 @@ import CurrentCard from './components/CurrentCard';
 import { createTheme, responsiveFontSizes, ThemeProvider } from '@mui/material/styles';
 import { BrowserRouter as Router, Link, Routes, Route } from "react-router-dom";
 import FiveDayCards from './components/FiveDayCards';
-import Button from '@mui/material/Button';
 
 
 let theme = createTheme();
@@ -85,8 +84,6 @@ function App() {
     }
   }, [location]);
 
-
-
   // Set location to default coordinates (Manchester) if geolocation is unavailable or declined, and
   // then pull current weather for that location
   const declinedPosition = () => {
@@ -113,7 +110,7 @@ function App() {
     axios.get(`https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=10&appid=${apiKey}`)
       .then (response => {
         setLocation(response.data[0]);
-        // console.log("Location from co-ordinates: ", response);
+        console.log("Location from co-ordinates: ", response);
       })
       .catch (err => {
         // console.log("Error getting location: ", err);
@@ -126,7 +123,7 @@ function App() {
         <SearchBoxContext.Provider value={{searchOpen, setLocation, setSearchOpen, handleSearchClose}}>
           <ThemeProvider theme={theme}>
             <Router>
-              <AppMenu />
+              <AppMenu setPosition={setPosition}/>
               <WeatherHeader weather={weather} location={location} searchResults={searchResults} forecastPage={forecastPage} setForecastPage={setForecastPage}/>
 
               <Routes>

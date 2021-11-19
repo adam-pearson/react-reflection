@@ -3,12 +3,14 @@ import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-// import IconButton from '@mui/material/IconButton';
+import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
-// import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import {SearchContext} from '../App';
+
+
+
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -52,7 +54,15 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function SearchAppBar() {
+export default function SearchAppBar({setPosition}) {
+
+  const locationClickHandler = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(setPosition);
+    } else {
+      console.error("Geolocation is not supported on this device");
+    }
+  }
 
   const searchContext = useContext(SearchContext); 
 
@@ -77,6 +87,9 @@ export default function SearchAppBar() {
           >
             React Weather
           </Typography>
+
+          <Button onClick={locationClickHandler} sx={{color: "white"}}>Use My Location</Button>
+
           <Box
           component="form"
           sx={{

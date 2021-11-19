@@ -77,10 +77,10 @@ export default function CurrentCard({weather, location}) {
               </div>
               <div className="weather-info">
                 <Typography variant="h3" color="text.primary">
-                    {weather ? `${weather.current.temp}°C` : <Skeleton variant="text" height={100} />}
+                    {weather ? `${weather.current.temp.toFixed(1)}°C` : <Skeleton variant="text" height={100} />}
                 </Typography>
                 <Typography variant="subtitle1" component="p" color="text.primary">
-                        {weather ? `Feels like ${weather.current.feels_like}°C` : ""}
+                        {weather ? `Feels like ${weather.current.feels_like.toFixed(1)}°C` : ""}
                 </Typography>
               </div>
             </div>

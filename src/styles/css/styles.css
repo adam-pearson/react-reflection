@@ -7,6 +7,7 @@
 
 .background-image {
   display: flex;
+  background-image: url("../../assets/images/clear.webp");
   justify-content: center;
   align-items: center;
   flex-direction: column;
@@ -126,6 +127,7 @@ li {
 .weather-info {
   display: flex;
   justify-content: center;
+  align-items: center;
   flex-direction: column;
   width: 50%;
 }
