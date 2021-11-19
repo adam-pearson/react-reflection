@@ -54,7 +54,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function SearchAppBar({setPosition}) {
+export default function SearchAppBar({setPosition, geoDeclined}) {
 
   const locationClickHandler = () => {
     if (navigator.geolocation) {
@@ -88,7 +88,9 @@ export default function SearchAppBar({setPosition}) {
             React Weather
           </Typography>
 
-          <Button onClick={locationClickHandler} sx={{color: "white"}}>Use My Location</Button>
+          {!geoDeclined &&
+          <Button  onClick={locationClickHandler} sx={{color: "white"}}>Use My Location</Button>
+          }
 
           <Box
           component="form"

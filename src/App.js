@@ -26,6 +26,7 @@ function App() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [weather, setWeather] = useState();
   const [location, setLocation] = useState();
+  const [geoDeclined, setGeoDeclined] = useState(false);
   // Tracks if the current page is the forecast page or not
   const [forecastPage, setForecastPage] = useState(false);
   // State and modifier for search box (passed through context)
@@ -72,7 +73,7 @@ function App() {
       // console.log("Response from one call request: ", response.data);
     })
     .catch (err => {
-      // console.log("Error from one call request: ", err);
+      console.log("Error from weather request: ", err);
     });
   };
 
@@ -87,6 +88,7 @@ function App() {
   // Set location to default coordinates (Manchester) if geolocation is unavailable or declined, and
   // then pull current weather for that location
   const declinedPosition = () => {
+    setGeoDeclined(true);
     let lat = 53.4808;
     let lon = -2.2426;
     axios.get(`https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=10&appid=${apiKey}`)
@@ -123,7 +125,7 @@ function App() {
         <SearchBoxContext.Provider value={{searchOpen, setLocation, setSearchOpen, handleSearchClose}}>
           <ThemeProvider theme={theme}>
             <Router>
-              <AppMenu setPosition={setPosition}/>
+              <AppMenu setPosition={setPosition} geoDeclined={geoDeclined}/>
               <WeatherHeader weather={weather} location={location} searchResults={searchResults} forecastPage={forecastPage} setForecastPage={setForecastPage}/>
 
               <Routes>
