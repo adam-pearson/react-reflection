@@ -7,7 +7,7 @@ import AppMenu from './components/AppMenu';
 import WeatherHeader from './components/WeatherHeader';
 import CurrentCard from './components/CurrentCard';
 import { createTheme, responsiveFontSizes, ThemeProvider } from '@mui/material/styles';
-import { BrowserRouter as Router, Link, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import FiveDayCards from './components/FiveDayCards';
 
 

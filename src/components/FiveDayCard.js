@@ -1,10 +1,8 @@
 import * as React from 'react';
-import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -19,7 +17,7 @@ const FiveDayCard = ({forecast, location, day}) => {
   }
   
   const rows = [
-    createData('Precipitation', forecast ? `${(forecast[day].pop * 100).toPrecision(2)}%` : "N/A"),
+    createData('Precipitation', forecast ? `${(forecast[day].pop * 100).toFixed(0)}%` : "N/A"),
     createData('Wind Speed', forecast ? `${forecast[day].wind_speed} km/h` : "N/A"),
     createData('Wind Direction', forecast ? `${forecast[day].wind_deg}°` : "N/A"),
     createData('Humidity', forecast ? `${forecast[day].humidity}%`: "N/A"),

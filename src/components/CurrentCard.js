@@ -42,7 +42,7 @@ export default function CurrentCard({weather, location}) {
   }
   
   const rows = [
-    createData('Precipitation', weather ? `${(weather.daily[0].pop * 100).toPrecision(2)}%` : "N/A"),
+    createData('Precipitation', weather ? `${(weather.daily[0].pop * 100).toFixed(0)}%` : "N/A"),
     createData('Wind Speed', weather ? `${weather.current.wind_speed} km/h` : "N/A"),
     createData('Wind Direction', weather ? `${weather.current.wind_deg}°` : "N/A"),
     createData('Humidity', weather ? `${weather.current.humidity}%`: "N/A"),
