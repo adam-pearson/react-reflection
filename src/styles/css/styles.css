@@ -192,4 +192,11 @@ li {
 .search-results {
   min-width: 275px;
 }
+
+.metric-switch {
+  overflow: visible;
+  width: 100%;
+  height: 100%;
+  transform: scale(0.3);
+}
 /*# sourceMappingURL=maps/styles.css.map */

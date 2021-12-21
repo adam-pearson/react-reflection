@@ -3,6 +3,8 @@ import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
+import MiscellaneousServicesIcon from '@mui/icons-material/MiscellaneousServices';
+import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
@@ -54,7 +56,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function SearchAppBar({setPosition, geoDeclined}) {
+export default function SearchAppBar({setPosition, geoDeclined, useMetric, setUseMetric}) {
 
   const locationClickHandler = () => {
     if (navigator.geolocation) {
@@ -70,15 +72,6 @@ export default function SearchAppBar({setPosition, geoDeclined}) {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          {/* <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton> */}
           <Typography
             variant="h6"
             noWrap
@@ -88,8 +81,18 @@ export default function SearchAppBar({setPosition, geoDeclined}) {
             React Weather
           </Typography>
 
+          <IconButton
+              size="large"
+              aria-label="show more"
+              aria-haspopup="true"
+              onClick={() => setUseMetric(!useMetric)}
+              color="inherit"
+            >
+              <MiscellaneousServicesIcon />
+            </IconButton>
+
           {!geoDeclined &&
-          <Button  onClick={locationClickHandler} sx={{color: "white"}}>Use My Location</Button>
+            <Button  onClick={locationClickHandler} sx={{color: "white"}}>Use My Location</Button>
           }
 
           <Box

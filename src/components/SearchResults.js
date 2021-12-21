@@ -84,7 +84,9 @@ BootstrapDialogTitle.propTypes = {
                         return (
                             <ListItem disablePadding key={index}>
                                 <ListItemButton onClick={e => searchClickHandler(item)}>
-                                    <ListItemText primary={`${item.name}, ${item.state ? `${item.state},` : ""} ${item.country ? `${CountryCodes.filter(country => country.alpha2 === item.country.toLowerCase())[0].name}` : ""}`} />
+                                    <ListItemText primary={
+                                      `${item.name}, ${item.state && `${item.state},`} ${item.country && `${CountryCodes.filter(country => country.alpha2 === item.country.toLowerCase())[0].name}`}`
+                                    } />
                                 </ListItemButton>
                             </ListItem>
                         )
@@ -103,3 +105,5 @@ BootstrapDialogTitle.propTypes = {
 }
 
 export default SearchResults
+
+

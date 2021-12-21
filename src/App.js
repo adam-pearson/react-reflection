@@ -16,12 +16,14 @@ theme = responsiveFontSizes(theme);
 
 export const SearchContext = createContext();
 export const SearchBoxContext = createContext();
+export const MetricContext = createContext();
 
 let apiKey = Config.OPENWEATHERMAP_API_KEY;
 
 
 function App() {
 
+  const [useMetric, setUseMetric] = useState(true);
   const [searchResults, setSearchResults] = useState();
   const [searchOpen, setSearchOpen] = useState(false);
   const [weather, setWeather] = useState();
@@ -123,19 +125,21 @@ function App() {
     <div>
       <SearchContext.Provider value={{searchValue, setSearchValue, searchSubmitHandler}}>
         <SearchBoxContext.Provider value={{searchOpen, setLocation, setSearchOpen, handleSearchClose}}>
-          <ThemeProvider theme={theme}>
-            <Router>
-              <AppMenu setPosition={setPosition} geoDeclined={geoDeclined}/>
-              <WeatherHeader weather={weather} location={location} searchResults={searchResults} forecastPage={forecastPage} setForecastPage={setForecastPage}/>
+          <MetricContext.Provider value={{useMetric, setUseMetric}}>
+            <ThemeProvider theme={theme}>
+              <Router>
+                <AppMenu setPosition={setPosition} geoDeclined={geoDeclined} useMetric={useMetric} setUseMetric={setUseMetric}/>
+                <WeatherHeader weather={weather} location={location} searchResults={searchResults} forecastPage={forecastPage} setForecastPage={setForecastPage}/>
 
-              <Routes>
-                <Route path="/" exact element={<CurrentCard weather={weather} location={location} searchResults={searchResults}/>} />
-                <Route path="/forecast" exact element={<FiveDayCards forecast={weather && weather.daily} location={location}/>} />
-                <Route element={<CurrentCard weather={weather} location={location} searchResults={searchResults}/>} />
-              </Routes>
+                <Routes>
+                  <Route path="/" exact element={<CurrentCard weather={weather} location={location} searchResults={searchResults}/>} />
+                  <Route path="/forecast" exact element={<FiveDayCards forecast={weather && weather.daily} location={location}/>} />
+                  <Route element={<CurrentCard weather={weather} location={location} searchResults={searchResults}/>} />
+                </Routes>
 
-              </Router>
-          </ThemeProvider>
+                </Router>
+            </ThemeProvider>
+          </MetricContext.Provider>
         </SearchBoxContext.Provider>
       </SearchContext.Provider>
     </div>

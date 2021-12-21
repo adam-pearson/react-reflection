@@ -9,20 +9,49 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Skeleton from '@mui/material/Skeleton';
+import {MetricContext} from '../App';
+
 
 const FiveDayCard = ({forecast, location, day}) => {
+
+  const metricContext = React.useContext(MetricContext);
+
 
   function createData(name,value) {
     return { name, value };
   }
   
+  // const rows = [
+  //   createData('Precipitation', forecast ? `${(forecast[day].pop * 100).toFixed(0)}%` : "N/A"),
+  //   createData('Wind Speed', forecast ? `${forecast[day].wind_speed.toFixed(1)} km/h` : "N/A"),
+  //   createData('Wind Direction', forecast ? `${forecast[day].wind_deg}°` : "N/A"),
+  //   createData('Humidity', forecast ? `${forecast[day].humidity}%`: "N/A"),
+  //   createData('UV Index', forecast ? `${forecast[day].uvi}` : "N/A"),
+  // ];
+
+
   const rows = [
-    createData('Precipitation', forecast ? `${(forecast[day].pop * 100).toFixed(0)}%` : "N/A"),
-    createData('Wind Speed', forecast ? `${forecast[day].wind_speed} km/h` : "N/A"),
-    createData('Wind Direction', forecast ? `${forecast[day].wind_deg}°` : "N/A"),
-    createData('Humidity', forecast ? `${forecast[day].humidity}%`: "N/A"),
-    createData('UV Index', forecast ? `${forecast[day].uvi}` : "N/A"),
+    createData(
+      'Precipitation',
+      forecast ? `${(forecast[day].pop * 100).toFixed(0)}%` : "N/A"
+    ),
+    createData(
+      'Wind Speed',
+      forecast ? metricContext.useMetric ? `${forecast[day].wind_speed.toFixed(1)} km/h` : `${(forecast[day].wind_speed / 1.609).toFixed(1)} mph` : "N/A"
+    ),
+    createData(
+      'Wind Direction', forecast ? `${forecast[day].wind_deg}°` : "N/A"
+    ),
+    createData(
+      'Humidity',
+      forecast ? `${forecast[day].humidity}%`: "N/A"
+    ),
+    createData(
+      'UV Index',
+      forecast ? `${forecast[day].uvi}` : "N/A"
+    ),
   ];
+
 
   let dayOfWeek = "";
 
@@ -56,13 +85,13 @@ const capitalise = (str) => {
                   <div className="weather-info">
                   {forecast ? 
                     <Typography className="forecast-temp" classcolor="text.primary">
-                        <span className="minmax">Max:</span> {forecast[day].temp.max.toFixed(1)}°C
+                        <span className="minmax">Max:</span> {metricContext.useMetric ? `${forecast[day].temp.max.toFixed(1)}°C` : `${((forecast[day].temp.max * 9/5) + 32).toFixed(1)}°F`}
                     </Typography>
                     : <Skeleton variant="text" height={32} />
                   }
                   {forecast ? 
                     <Typography className="forecast-temp" color="text.primary">
-                      <span className="minmax">Min:</span> {forecast[day].temp.min.toFixed(1)}°C
+                      <span className="minmax">Min:</span> {metricContext.useMetric ? `${forecast[day].temp.min.toFixed(1)}°C` : `${((forecast[day].temp.min * 9/5) + 32).toFixed(1)}°F`}
                     </Typography>
                     : <Skeleton variant="text" height={32} />
                   }

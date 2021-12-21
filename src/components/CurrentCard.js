@@ -14,6 +14,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Skeleton from '@mui/material/Skeleton';
+import {MetricContext} from '../App';
 
 
 const capitalise = (str) => {
@@ -36,17 +37,32 @@ const ExpandMore = styled((props) => {
 
 export default function CurrentCard({weather, location}) {
   const [expanded, setExpanded] = React.useState(false);
+  const metricContext = React.useContext(MetricContext);
 
   function createData(name,value) {
     return { name, value };
   }
   
   const rows = [
-    createData('Precipitation', weather ? `${(weather.daily[0].pop * 100).toFixed(0)}%` : "N/A"),
-    createData('Wind Speed', weather ? `${weather.current.wind_speed} km/h` : "N/A"),
-    createData('Wind Direction', weather ? `${weather.current.wind_deg}°` : "N/A"),
-    createData('Humidity', weather ? `${weather.current.humidity}%`: "N/A"),
-    createData('UV Index', weather ? `${weather.current.uvi}` : "N/A"),
+    createData(
+      'Precipitation',
+      weather ? `${(weather.daily[0].pop * 100).toFixed(0)}%` : "N/A"
+    ),
+    createData(
+      'Wind Speed',
+      weather ? metricContext.useMetric ? `${weather.current.wind_speed.toFixed(1)} km/h` : `${(weather.current.wind_speed / 1.609).toFixed(1)} mph` : "N/A"
+    ),
+    createData(
+      'Wind Direction', weather ? `${weather.current.wind_deg}°` : "N/A"
+    ),
+    createData(
+      'Humidity',
+      weather ? `${weather.current.humidity}%`: "N/A"
+    ),
+    createData(
+      'UV Index',
+       weather ? `${weather.current.uvi}` : "N/A"
+    ),
   ];
 
   let time = "";
@@ -77,10 +93,10 @@ export default function CurrentCard({weather, location}) {
               </div>
               <div className="weather-info">
                 <Typography variant="h3" color="text.primary">
-                    {weather ? `${weather.current.temp.toFixed(1)}°C` : <Skeleton variant="text" height={100} />}
+                    {weather ? metricContext.useMetric ? `${weather.current.temp.toFixed(1)}°C` : `${((weather.current.temp * 9/5) + 32).toFixed(1)}°F` : <Skeleton variant="text" height={100} />}
                 </Typography>
                 <Typography variant="subtitle1" component="p" color="text.primary">
-                        {weather ? `Feels like ${weather.current.feels_like.toFixed(1)}°C` : ""}
+                        {weather ? metricContext.useMetric ? `Feels like ${weather.current.feels_like.toFixed(1)}°C` : `Feels like ${((weather.current.feels_like * 9/5) + 32).toFixed(1)}°F`  : ""}
                 </Typography>
               </div>
             </div>
